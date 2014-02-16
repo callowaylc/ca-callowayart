@@ -5,15 +5,21 @@
 	<tr align="center">
 		<td><table width="960" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 			<tr>
-				<td><img src="images/call_brand.jpg" alt="Susan Calloway Fine Arts" width="360" height="245" /></td>
-				<td><img src="images/call_home_nav.jpg" alt="(navigation) Fine Art | Design | About | Contact" width="600" height="245" border="0" usemap="#Map" /></td>
+				<td><%= image_tag "call_brand.jpg" %></td>
+				<td><%= image_tag "call_home_nav.jpg", :usemap => "Map" %></td>
 				</tr>
 			<tr>
-				<td colspan="2"><img src="images/960x65topbar.gif" alt="decoration" width="960" height="66" /><br /><img src="images/frontBanner/960x120_imagebar3.jpg" alt="Images" width="960" height="120" /><br /><img src="images/960x15bottombar.gif" alt="decoration" width="960" height="15" /></td>
+				<td colspan="2" >
+					<%= image_tag "960x65topbar.gif"                      %>
+					<div style="margin-top:-4px"><%= image_tag "960x120_imagebar#{[*1..5].sample}.jpg" %></div>
+					<div style="margin-top:-4px" ><%= image_tag "960x15bottombar.gif"   %></div>
+				</td>
 				</tr>
 			<tr>
-				<td colspan="2"><img src="images/call_home_foot.jpg" alt="Footer" width="960" height="155" /></td>
-				</tr>
+				<td colspan="2" >
+					<%= image_tag "call_home_foot.jpg" %>
+				</td>
+			</tr>
 		</table></td>
 	</tr>
 		<tr>
