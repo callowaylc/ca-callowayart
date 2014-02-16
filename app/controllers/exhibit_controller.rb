@@ -1,0 +1,2 @@
+class ExhibitController < ApplicationController
+end
