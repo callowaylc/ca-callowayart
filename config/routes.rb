@@ -1,6 +1,10 @@
 CaCallowayart::Application.routes.draw do
-  get "gallery/index"
-  get "home/index"
+  get "exhibit/index"
+  get "listing/index"
+  get "gallery", to: 'gallery#index'
+  get "exhit",   to: 'exhibit#index'
+  get "listing", to: 'listing#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
