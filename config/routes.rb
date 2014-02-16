@@ -1,8 +1,6 @@
 CaCallowayart::Application.routes.draw do
-  get "exhibit/index"
-  get "listing/index"
   get "gallery", to: 'gallery#index'
-  get "exhit",   to: 'exhibit#index'
+  get "exhibit", to: 'exhibit#index'
   get "listing", to: 'listing#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -10,6 +8,12 @@ CaCallowayart::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'home#index'
+
+  # allow for variable number of arguments/tags
+  # for gallery; determine if there is a better
+  # way to do this
+  get 'gallery*tags', to: 'gallery#index'
+ 
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
