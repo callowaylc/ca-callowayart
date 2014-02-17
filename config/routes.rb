@@ -1,5 +1,7 @@
 CaCallowayart::Application.routes.draw do
-  get "gallery", to: 'gallery#index'
+  get "gallery/:page*tags", to: 'gallery#index', defaults: {
+    page: 1
+  }
   get "exhibit", to: 'exhibit#index'
   get "listing", to: 'listing#index'
 
@@ -12,7 +14,7 @@ CaCallowayart::Application.routes.draw do
   # allow for variable number of arguments/tags
   # for gallery; determine if there is a better
   # way to do this
-  get 'gallery*tags', to: 'gallery#index'
+  #get 'gallery*tags', to: 'gallery#index'
  
 
   # Example of regular route:

@@ -1,6 +1,8 @@
 class GalleryController < ApplicationController
   def index
-  	raise params[:tags].to_s
+  	@page = params[:page]
+  	@tags = params[:tags].split
+  	
   	
   end
 end
