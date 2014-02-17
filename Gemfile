@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'mysql2'
 gem 'rest-client'
 gem 'json'
+gem 'faraday'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

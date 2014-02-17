@@ -1,8 +1,10 @@
 CaCallowayart::Application.routes.draw do
-  get "gallery/:page*tags", to: 'gallery#index', defaults: {
+  get "gallery*tags", to: 'gallery#index', defaults: {
+    page: 1, group: artist
+  }
+  get "exhibit*tags", to: 'gallery#index', defaults: {
     page: 1
   }
-  get "exhibit", to: 'exhibit#index'
   get "listing", to: 'listing#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
