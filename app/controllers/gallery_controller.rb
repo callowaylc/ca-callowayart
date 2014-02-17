@@ -5,14 +5,24 @@ class GalleryController < ApplicationController
     # determine view params
   	@page = params[:page]
 
-  	@tags = params[:tags]
-    @tags = @tags[1..@tags.length].split '/'
+  	# determine if resource specific page
+  	# or if tags have been passed directly
+  	if params[:tags].present?
+	  	@tags = params[:tags]
+	    @tags = @tags[1..@tags.length].split '/'
 
-    raise @tags.to_s
+	  else
+	  	@tags = [ ]
+	  	@tags << params[:resource] if params[:resource].present?
+	  	@tags << params[:slug]     if params[:slug ].present? 
+	  	
+	  end
 
     # get listings
     @listings = images @tags
   	
+  	# if group is available, we will need to 
+  	# group by 
 
   end
 end

@@ -1,11 +1,11 @@
 CaCallowayart::Application.routes.draw do
   get "gallery*tags", to: 'gallery#index', defaults: {
-    page: 1, group: artist
+    page: 1, group: 'artist'
   }
-  get "exhibit*tags", to: 'gallery#index', defaults: {
-    page: 1
+  get "exhibit/:slug", to: 'gallery#index', defaults: {
+    page: 1, resource: 'exhibit'
   }
-  get "listing", to: 'listing#index'
+  get "listing/:slug", to: 'listing#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
