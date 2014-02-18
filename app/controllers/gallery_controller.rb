@@ -3,7 +3,13 @@ class GalleryController < ApplicationController
 
   def index
     # determine view params
-  	@page = params[:page]
+  	@page  = params[:page]
+  	
+  	if params[:group].present?
+  		@group = params[:group]
+  		@terms = terms [ @group ]
+
+  	end
 
   	# determine if resource specific page
   	# or if tags have been passed directly
@@ -15,7 +21,7 @@ class GalleryController < ApplicationController
 	  	@tags = [ ]
 	  	@tags << params[:resource] if params[:resource].present?
 	  	@tags << params[:slug]     if params[:slug ].present? 
-	  	
+
 	  end
 
     # get listings

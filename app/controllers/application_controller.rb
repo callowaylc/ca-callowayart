@@ -6,18 +6,27 @@ class ApplicationController < ActionController::Base
   protected 
 
   	def images(tags)
-      client = Faraday.new(
+      response = client.get '/api/image', { tags: tags }
+
+      JSON.parse response.body
+  	end
+
+    def terms(terms)
+      response = client.get '/api/term', { terms: terms }
+
+      JSON.parse response.body
+    end
+
+  private
+    def client 
+      Faraday.new(
         :url => 'http://cms.callowayart.stage'
       
       ) do | faraday |
         faraday.request  :url_encoded             # form-encode POST params
         faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter
-      end
+      end      
+    end
 
-      response = client.get '/api/image', { tags: tags }
-
-
-      JSON.parse response.body
-  	end
 end
