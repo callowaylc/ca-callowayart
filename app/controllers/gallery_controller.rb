@@ -5,12 +5,6 @@ class GalleryController < ApplicationController
     # determine view params
   	@page  = params[:page]
   	
-  	if params[:group].present?
-  		@group = params[:group]
-  		@terms = terms [ @group ]
-
-  	end
-
   	# determine if resource specific page
   	# or if tags have been passed directly
   	if params[:tags].present?
@@ -28,7 +22,38 @@ class GalleryController < ApplicationController
     @listings = images @tags
   	
   	# if group is available, we will need to 
-  	# group by 
+  	# group by um.. group
+    if params[:group].present?
+      @group = params[:group]
+      @terms = terms [ @group ]
+      groups = [ ]
+
+      @terms.each do | term |
+        @listings = @listings.collect do | listing |
+          listing[:grouped].nil?
+        end
+
+        @listings.each do | listing |
+          if (listing.tags.include? term)
+            listing[:grouped]     = true
+            groups[term]          = listing
+            
+            groups[term]['count'] ||= 0
+            groups[term]['count'] += 1
+        end
+      end
+
+      # collect any uncategorized content
+
+      unless @listings.empty?
+        groups['uncategorized']          = @listings.first
+        groups['uncategorized']['count'] = @listings.count
+      end
+
+      @listings = groups
+
+    end    
+
 
   end
 end
