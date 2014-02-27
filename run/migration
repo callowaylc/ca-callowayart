@@ -15,6 +15,15 @@ class String
   def slugify
     self.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
+
+  def prettify
+    self.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1 \2').
+    gsub(/([a-z\d])([A-Z])/,'\1 \2').
+    tr("-", " ").
+    downcase
+  end
+  
 end
 
 def dump_database
@@ -66,7 +75,12 @@ client = Mysql2::Client.new(
   username: 'callow5',
   password: 'fe5180zz',
   database: 'callow5_gallery'
-) 
+)
+
+result.each do | record |
+  p record['category'].slugify
+  exit
+end 
 
 
 # define additions for categories
