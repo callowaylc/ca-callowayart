@@ -4,7 +4,7 @@ class GalleryController < ApplicationController
   def index
     # determine view params
   	@page  = params[:page]
-  	
+
   	# determine if resource specific page
   	# or if tags have been passed directly
   	if params[:tags].present?
@@ -26,31 +26,48 @@ class GalleryController < ApplicationController
     if params[:group].present?
       @group = params[:group]
       @terms = terms [ @group ]
-      groups = [ ]
+      groups = { }
 
       @terms.each do | term |
-        @listings = @listings.collect do | listing |
-          listing[:grouped].nil?
-        end
+        name, slug = term['name'], term['slug']
 
         @listings.each do | listing |
-          if (listing.tags.include? term)
-            listing[:grouped]     = true
-            groups[term]          = listing
-            
-            groups[term]['count'] ||= 0
-            groups[term]['count'] += 1
+          if listing['tags'].include? slug
+            groups[name] ||= [ ]              
+            groups[name] << listing
+          end
         end
       end
 
+      # if only one group is present, we are looking at 
+      # an individual gallery and each item will beome
+      # a listing
+
+      if groups.count == 1
+        @listings = groups.first[1] 
+
+      # otherwise we pull a random record and collect count information
+      # to represent the group
+      else
+        @listings = [ ]
+
+        groups.each do | name, listings |
+          listing                = listings.sample
+          listing['description'] = name
+          listing['title']       = name
+          listing['count']       = listings.length
+
+          @listings << listing
+        end
+      end
       # collect any uncategorized content
 
-      unless @listings.empty?
-        groups['uncategorized']          = @listings.first
-        groups['uncategorized']['count'] = @listings.count
-      end
+      #unless @listings.empty?
+      #  groups['uncategorized']          = @listings.first
+      #  groups['uncategorized']['count'] = @listings.count
+      #  groups['uncategorized']['group'] = 'uncategorized' 
+      #end
 
-      @listings = groups
 
     end    
 

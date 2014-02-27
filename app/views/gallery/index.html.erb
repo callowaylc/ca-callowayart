@@ -1,5 +1,5 @@
-
-<a name="top"> </a><table width="100%" border="0" cellpadding="0" cellspacing="0">
+<a name="top"> </a>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td>&nbsp;<p /><p /></td>
 	</tr>
@@ -54,27 +54,65 @@
 							<tr align=left>
 								<td bgcolor='#000000' width='15'>&nbsp;</td><td bgcolor='#000000' width='150'>
 									<div id="mycarousel1" class="carousel-component">
-										<div class="carousel-clip-region" style='width:150px; height: 120px; overflow:hidden'>
-											<img src="<%= listing['thumb'] %>" />
+										<div class="carousel-clip-region" >
+											<a href="<%= uri_for listing %>" >
+												<img src="<%= listing['thumb'] %>" style='width:150px; height:120px' />
+											</a>
 										</div>
 									</div>
 								</td>
 
 								<td width='190' class='description'>
-									<a href="<% uri_for listing %>">
-										<b><%= raw (description_for listing) %></b>
+									<a href="<%= uri_for listing %>" >
+										<b><%= raw(description_for listing) %></b>
 									</a>
 									<br />
 
-									<%= image_tag 'arrow-left.jpg' %>
-									Scroll Through Collection&nbsp;
-									<%= image_tag 'arrow-right.jpg' %>
-									<br />
-
-									<a href="<%= uri_for listing %>">View all 24 Pieces</a>
+									<% unless listing['count'].nil? %>
+										<%= image_tag 'arrow-left.jpg' %>
+										Scroll Through Collection&nbsp;
+										<%= image_tag 'arrow-right.jpg' %>
+										<br />		
+																	
+										<a href="<%= uri_for listing %>">
+											View all <%= listing['count'] %> Pieces
+										</a>
+									<% end %>
 								</td>
 
 							</tr>	
 						<% end %>
 
+					</table>
+				</td>
+				<td width="245">
+					<table width="100%" cellpadding="15" cellspacing="0" border="0">
+						<tr><td>&nbsp;</td></tr>
 					</table>				
+				</td>
+			</tr>
+		</table>
+	</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr align="center">
+		<td>
+			Susan Calloway Fine Arts | 1643 Wisconsin Ave NW | Washington DC <%= Date.current.year %> | 202 965 4601 <br />
+			<a href="/gallery/fine-art">Fine Art</a> | 
+			<a href="/contact">Contact</a> | 
+			<a href="/about">About</a> | 
+			<a href="/gallery/custom-framing-and-mirror-design">Design</a>
+		</td>
+	</tr>
+</table>
+
+
+<map name="Map" id="Map"><area shape="rect" coords="81,31,166,52" href="fineArt.php" />
+	<area shape="rect" coords="172,33,247,52" href="/gallery/custom-framing-and-mirror-design" />
+	<area shape="rect" coords="251,34,352,50" href="/about" />
+</map>
+<map name="Map2" id="Map2">
+	<area shape="rect" coords="79,223,324,245" href="/" />
+</map>						

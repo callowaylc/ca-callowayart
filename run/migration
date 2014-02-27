@@ -1,0 +1,90 @@
+#!/usr/bin/env ruby
+# Description: Migrates data from defunt callowayart database
+
+
+# REQUIRE
+require 'mysql2'
+require 'faraday'
+
+# CONST
+ROOT = '/app/callowayart/'
+
+# FUNCTIONS / PATCHES
+
+class String
+  def slugify
+    self.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+  end
+end
+
+def dump_database
+end
+
+
+# MAIN
+
+# perform dump of current database
+dump_database 
+
+# create database client
+client = Mysql2::Client.new(
+	host:     'database.defunct', 
+  username: 'callow5',
+  password: 'fe5180zz',
+  database: 'callow5_gallery'
+)
+
+
+# query old records
+result = client.query %{
+  SELECT
+    a.*,
+    ab.name     as artist,
+    ab.URL      as artist_url,
+    ab.bio      as artost_bio,
+    e.title     as exhibit_title,
+    e.startDate as exhibit_start_date,
+    c.category  as category
+
+  FROM art a
+    LEFT JOIN artistBio ab
+      ON ab.name = a.artist
+
+    LEFT JOIN exhibit e
+      USING (ID_exhibit)
+
+    LEFT JOIN collection c
+      USING (ID_collection)
+
+}
+
+# iterate through results and perform updates using
+# a combination of api and database
+rest   = Faraday.new 'http://cms.callowayart.stage'
+client = Mysql2::Client.new(
+  host:     'database.defunct', 
+  username: 'callow5',
+  password: 'fe5180zz',
+  database: 'callow5_gallery'
+) 
+
+
+# define additions for categories
+additions = [ 
+  { for: [ 
+      'contemporary-art',
+      'antique-prints-and-drawings',
+      'antique-paintings',
+      'sculpture'
+    ],
+
+    include: [ 'fine-art' ] 
+  },
+
+  { for: [ 
+      'custom-framing-and-mirror-design'
+    ],
+
+    include: [ 'design' ]
+  }  
+]

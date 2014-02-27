@@ -1,2 +1,26 @@
-<h1>Listing#index</h1>
-<p>Find me in app/views/listing/index.html.erb</p>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>&nbsp;<p /><p /></td>
+	</tr>
+	<tr align="center">
+		<td>
+			<table width="960" height="900" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+			<tr>
+			<td align="center">
+				<br />
+				<div style='font: 20pt Arial bold; font-variant:small-caps; '><%= @listing['title'].downcase %></div>
+				<img src="<%= @listing['full'] %>" />
+			</td>
+			</tr>
+
+			<tr>
+			<td align="left">
+				<div style='margin:10px'>
+					<b><%= raw(description_for @listing) %></b>					
+				</div>
+			</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</table>

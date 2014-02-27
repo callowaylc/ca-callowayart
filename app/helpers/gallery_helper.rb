@@ -2,31 +2,24 @@ module GalleryHelper
 
 	def uri_for listing
 
-		# if group is present, then we are defining a resource
-		# 
-		unless @group.nil?
-			
-
-		else
-			slugify listing
-
-		end
-
-	end
-
-	def slugify listing
-		listing.caption.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
-
+		# get current path and uses slugified
+    # caption property to build new resource
+    unless listing['count'].nil?
+		  request.path + '/' + slugify(listing['title'])
+    else
+      '/listing/' + slugify(listing['title'])
+    end
 	end
 
 	def description_for listing
-		listing['description'].gsub /\n/, '<br />' 
-
+    listing['description'].gsub /\n/, '<br />'
 	end
 
-	def terms
-		super params[:group]
+  protected 
 
-	end
+    def slugify string
+      #string.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+      string.downcase.strip.gsub(' ', '-')
+    end
 
 end

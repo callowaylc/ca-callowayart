@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
       JSON.parse response.body
   	end
 
+    def image(slug)
+      response = client.get '/api/image', { slug: slug }
+
+      JSON.parse response.body
+    end
+
     def terms(terms)
       response = client.get '/api/term', { terms: terms }
 
