@@ -14,8 +14,8 @@ module GalleryHelper
     end
 	end
 
-	def description_for listing
-    listing['description'].gsub /\n/, '<br />'
+	def description_forr listing
+    listing['description'].split("\n")[0..2].join('<br />')
 	end
 
   protected 
