@@ -6,8 +6,11 @@ module GalleryHelper
     # caption property to build new resource
     unless listing['count'].nil?
 		  request.path + '/' + slugify(listing['title'])
+
     else
-      '/listing/' + slugify(listing['title'])
+      '/listing'                 + '/' + 
+      slugify(listing['artist']) + '/' + 
+      slugify(listing['title'])
     end
 	end
 

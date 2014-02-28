@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
 
   	def images(tags)
       response = client.get '/api/image', { tags: tags }
-
       JSON.parse response.body
   	end
 
@@ -26,7 +25,7 @@ class ApplicationController < ActionController::Base
   private
     def client 
       Faraday.new(
-        :url => 'http://cms.callowayart.stage'
+        :url => 'http://cms.callowayart.com'
       
       ) do | faraday |
         faraday.request  :url_encoded             # form-encode POST params

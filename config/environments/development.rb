@@ -28,4 +28,12 @@ CaCallowayart::Application.configure do
   config.assets.debug = true
   config.assets.compile = true
   config.serve_static_assets = true
+
+  # tell varnish to cache content as well as inform proxy
+  # and client to cash as well
+  config.action_dispatch.default_headers = {
+    'X-Varnish-TTL'   => '5m',
+    'X-Remove-Cookie' => '1',
+    'Cache-Control' => 'public, max-age=300'
+  }  
 end

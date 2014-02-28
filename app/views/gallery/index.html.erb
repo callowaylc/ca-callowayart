@@ -63,10 +63,13 @@
 								</td>
 
 								<td width='190' class='description'>
+									<div style='width:190px; height:120px; overflow:hidden' >
 									<a href="<%= uri_for listing %>" >
 										<b><%= raw(description_for listing) %></b>
 									</a>
+									</div>
 									<br />
+
 
 									<% unless listing['count'].nil? %>
 										<%= image_tag 'arrow-left.jpg' %>

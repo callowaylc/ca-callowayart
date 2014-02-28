@@ -3,6 +3,6 @@ class ListingController < ApplicationController
   
     # get listing
     @listing = image(params[:slug])[0]
-
+    @artist  = params[:artist]
   end
 end
