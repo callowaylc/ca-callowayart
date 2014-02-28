@@ -75,8 +75,8 @@ end
 
 
 def description_for_artist artist
-  description = artist['artist_bio']
-  description += "\n\n#{artist['artist_url']}" unless artist['artist_url'].empty?
+  description = artist['artist_bio']           if artist['artist_bio']
+  description += "\n\n#{artist['artist_url']}" if artist['artist_url']
 
   description
 end
@@ -100,6 +100,7 @@ dump_database
 result = @client.query %{
   SELECT
     a.*,
+    a.artist    as artist_backup,
     a.ID_art    as art_id,
     ab.name     as artist,
     ab.URL      as artist_url,
@@ -179,6 +180,11 @@ result.each do | record |
       end
     end    
   end
+
+  # make a determination of what is the correct artist,
+  # since the last fucking idiot didnt bother to 
+  # normalize shit
+  record['artist'] ||= record['artist_backup']
 
   unless record['artist'].nil?
     tags << { 

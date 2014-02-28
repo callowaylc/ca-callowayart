@@ -18,12 +18,23 @@ class GalleryController < ApplicationController
 
 	  end
 
+    @tags << params[:exhibit] if params[:exhibit].present?
+
     # get listings
     @listings = images @tags
-  	
+
   	# if group is available, we will need to 
   	# group by um.. group
     if params[:group].present?
+
+      # TODO: this is a total hack because I have no idea
+      # how to override default parameter values; setting 
+      # group value to exhibit if request path matches
+      # ^exhibit
+      if request.path =~ /^\/exhibit/
+        params[:group] = 'exhibit'
+      end
+
       @group = params[:group]
       @terms = terms [ @group ]
       groups = { }
