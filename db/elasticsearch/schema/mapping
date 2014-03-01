@@ -3,16 +3,25 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
     "art" : {
        "properties":{
             "uri":{
-               "index": "no",
+               "index": "not_analyzed",
                "type":  "string"
             },            
-            "title":{
-               "search_analyzer": "full_name",
-               "index_analyzer":  "partial_name",
-               "type":"string"
+            "title": {
+              "fields":{
+                  "__title":{
+                     "type":"string",
+                     "analyzer":"keyword"
+                  },
+                  "title":{
+                     "search_analyzer":"full_name",
+                     "index_analyzer":"partial_name",
+                     "type":"string"
+                  }
+               },
+               "type":"multi_field"
             },
             "description":{
-               "index": "no",
+               "index": "not_analyzed",
                "type":  "string"
             },
             "artist": {

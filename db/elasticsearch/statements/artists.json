@@ -1,0 +1,29 @@
+{
+    // query body
+
+    // provide our group by (aggregations in elastic search)
+    "aggregations": {
+        "artist": {
+            "terms": { "field":   "__artist"   },
+           
+            "aggregations": {
+                "uri": {
+                    "terms": { 
+                      "field":"uri", 
+                      "size": 1   
+                    }
+                   
+                },
+
+                "title": {
+                    "terms": { 
+                      "field":"__title", 
+                      "size": 1   
+                    }
+                   
+                }                
+            }
+
+        }
+    }
+}

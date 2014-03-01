@@ -27,14 +27,17 @@ loop do
 	# iterate through images, transform and import into 
 	# elastic search
 	images.each do | image |
-		index << {
+		index << hash = {
 			id:          image['id'],
 			title:       image['title'],
 			description: image['description'],
+			artist:      image['artist'],
 			uri:         image['full'],
 			tags:        image['tags'],
 			type:        'art'
 		}
+
+		hash['exhibit'] = image['exhibit'] if image['exhibit']
 	end
 
 	Tire.index 'callowayart' do
