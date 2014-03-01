@@ -29,6 +29,20 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
                },
                "type":"multi_field"
             },
+            "exhibit": {
+              "fields":{
+                  "__exhibit":{
+                     "type":"string",
+                     "analyzer":"keyword"
+                  },
+                  "exhibit":{
+                     "search_analyzer":"full_name",
+                     "index_analyzer":"partial_name",
+                     "type":"string"
+                  }
+               },
+               "type":"multi_field"
+            },            
             "tags": {
               "fields":{
                   "__tags":{

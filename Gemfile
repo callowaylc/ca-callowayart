@@ -30,6 +30,7 @@ gem 'mysql2'
 gem 'rest-client'
 gem 'json'
 gem 'faraday'
+gem 'tire'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

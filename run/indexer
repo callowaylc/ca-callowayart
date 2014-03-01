@@ -1,4 +1,47 @@
 #!/usr/bin/env ruby
+# Description: Migrates data from defunt callowayart database
+
 
 # REQUIRE
-require 'mysql2'
+require 'faraday'
+require 'tire'
+require 'json'
+
+# MAIN
+
+# create rest client
+rest = Faraday.new 'http://cms.callowayart.com'
+
+# iterate through records
+count = 0
+
+loop do
+	puts "processing images #{count * 10} through #{(count * 10) + 10}"
+
+	index  = [ ]
+	images = JSON.parse(rest.get('/api/image', {
+		offset: ((count += 1) - 1) * 10,
+		limit:  10
+	}).body)
+
+	# iterate through images, transform and import into 
+	# elastic search
+	images.each do | image |
+		index << {
+			id:          image['id'],
+			title:       image['title'],
+			description: image['description'],
+			uri:         image['full'],
+			tags:        image['tags'],
+			type:        'art'
+		}
+	end
+
+	Tire.index 'callowayart' do
+		import index
+	end
+
+	break if images.count == 0
+end
+
+puts "done"
