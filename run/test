@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+require 'tire'
+require 'pp'
+
+search = Tire.search 'callowayart' do
+
+  query do
+    boolean do 
+      must { string 'tags:fine-art' }
+      must { string 'tags:contemporary-art' }
+    end
+
+  end
+
+  facet 'artists'  do
+    terms [ '__artist', 'uri' ], size: 10
+  end
+
+  size 1000
+end
+
+pp search.results.facets
