@@ -1,37 +1,25 @@
 class ApplicationController < ActionController::Base
+  
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
   protected 
 
-  	def images(tags)
-      response = client.get '/api/image', { tags: tags }
-      JSON.parse response.body
-  	end
+    def query name, params
+      # create es client
+      client = Elasticsearch::Client.new
 
-    def image(slug)
-      response = client.get '/api/image', { slug: slug }
+      # parse statement file and return client
+      # result
+      erb = ERB.new(
+        file = "#{ENV['RAILS_ROOT']}/db/elasticsearch/statements/" +
+               "#{name}.json.erb"
+      )
 
-      JSON.parse response.body
-    end
-
-    def terms(terms)
-      response = client.get '/api/term', { terms: terms }
-
-      JSON.parse response.body
-    end
-
-  private
-    def client 
-      Faraday.new(
-        :url => 'http://cms.callowayart.com'
-      
-      ) do | faraday |
-        faraday.request  :url_encoded             # form-encode POST params
-        faraday.response :logger                  # log requests to STDOUT
-        faraday.adapter  Faraday.default_adapter
-      end      
+      # finally return
+      client.search index: 'callowayart', 
+                    body:  erb.result OpenStruct.new(params).instance_eval { binding }
     end
 
 end

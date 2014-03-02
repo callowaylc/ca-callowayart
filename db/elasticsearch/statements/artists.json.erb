@@ -1,9 +1,7 @@
-curl -XGET "http://localhost:9200/callowayart/_search?pretty=true" -d '
 {
     "size" : 0,
 
     "query": { "bool": {
-
       <% @tags.each do | tag | %>
         "must": { "term": {  "__tags" : "<%= tag %>"  }}
       <% end %>
@@ -27,7 +25,7 @@ curl -XGET "http://localhost:9200/callowayart/_search?pretty=true" -d '
 
                 "title": {
                     "terms": { 
-                      "field":"__title", 
+                      "field":"__artist", 
                       "size": 1   
                     }
                    
@@ -36,4 +34,4 @@ curl -XGET "http://localhost:9200/callowayart/_search?pretty=true" -d '
 
         }
     }
-}'
+}

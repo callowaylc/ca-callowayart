@@ -32,6 +32,7 @@ gem 'json'
 gem 'faraday'
 gem 'tire'
 gem 'elasticsearch/api'
+gem 'erb'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

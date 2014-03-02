@@ -1,0 +1,37 @@
+{
+    "size" : 0,
+
+    "query": { "bool": {
+      <% @tags.each do | tag | %>
+        "must": { "term": {  "__tags" : "<%= tag %>"  }}
+      <% end %>
+    }},
+    
+
+
+    // provide our group by (aggregations in elastic search)
+    "aggregations": {
+        "artist": {
+            "terms": { "field":   "__exhibit"   },
+           
+            "aggregations": {
+                "uri": {
+                    "terms": { 
+                      "field":"uri", 
+                      "size": 1   
+                    }
+                   
+                },
+
+                "title": {
+                    "terms": { 
+                      "field":"__exhibit", 
+                      "size": 1   
+                    }
+                   
+                }                
+            }
+
+        }
+    }
+}
