@@ -1,5 +1,15 @@
+curl -XGET "http://localhost:9200/callowayart/_search?pretty=true" -d '
 {
-    // query body
+    "size" : 0,
+
+    "query": { "bool": {
+
+      <% @tags.each do | tag | %>
+        "must": { "term": {  "__tags" : "<%= tag %>"  }}
+      <% end %>
+    }},
+    
+
 
     // provide our group by (aggregations in elastic search)
     "aggregations": {
@@ -26,4 +36,4 @@
 
         }
     }
-}
+}'

@@ -31,6 +31,7 @@ gem 'rest-client'
 gem 'json'
 gem 'faraday'
 gem 'tire'
+gem 'elasticsearch/api'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
