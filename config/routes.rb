@@ -1,17 +1,19 @@
 CaCallowayart::Application.routes.draw do
   get "gallery*tags", to: 'gallery#index', defaults: {
-    page: 1, group: 'artist'
+    page: 1, group: 'artists'
   }
 
   get "exhibit/current", to: 'gallery#index', defaults: {
-    tags: '/ink', group: 'exhibit'
+    tags: '/ink', group: 'collection'
   }
 
   get "exhibit/past/(:exhibit)", to: 'gallery#index', defaults: {
-    tags: '/exhibit', group: 'exhibit'
+    tags: '/exhibit', group: 'exhibits'
   }
 
-  get "listing/:artist/:slug", to: 'listing#index'
+  get "listing/:artist/:slug", to: 'listing#index', defaults: {
+    group: 'collection'
+  }
 
   get "about",   to: 'home#about'
   get "contact", to: 'home#contact' 

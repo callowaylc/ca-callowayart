@@ -9,17 +9,52 @@ class ApplicationController < ActionController::Base
     def query name, params
       # create es client
       client = Elasticsearch::Client.new
-
-      # parse statement file and return client
-      # result
-      erb = ERB.new(
-        file = "#{ENV['RAILS_ROOT']}/db/elasticsearch/statements/" +
-               "#{name}.json.erb"
+      erb    = ERB.new(
+        content = File.read(
+          "#{ENV['RAILS_ROOT']}/db/elasticsearch/statements/" +
+          "#{name}.json.erb"
+        )
       )
 
-      # finally return
-      client.search index: 'callowayart', 
-                    body:  erb.result OpenStruct.new(params).instance_eval { binding }
+      # parse and return valid statement and pass to 
+      # elasticsearch client
+      statement = erb.result OpenStruct.new(params).instance_eval { 
+        binding 
+      }
+      result    = client.search index: 'callowayart', 
+                                body:  statement
+
+      # now massage result set into a simpler data structure
+      data = [ ]
+
+
+      # if aggregations have been returned, we are returning
+      # a grouped result set
+      if result['aggregations'].nil?
+        result['hits']['hits'].each do | hash |
+          bucket = hash['_source']
+
+          data << {
+            title: bucket['title'],
+            description: bucket['description'],
+            image: bucket['uri'],
+            artist: bucket['artist'] 
+          }
+        end
+
+      else
+
+        result['aggregations'][name]['buckets'].each do | bucket |
+          data << {
+            title: bucket['key'],
+            count: bucket['doc_count'],
+            image: bucket['uri']['buckets'][0]['key'],
+            description: bucket['key']
+          }
+        end
+      end
+
+      data
     end
 
 end

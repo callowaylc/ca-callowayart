@@ -1,0 +1,10 @@
+{
+    "size" : 1000,
+
+    "query": { "bool": {
+      <% tags.each_with_index do | tag, index | %>
+        "must": { "term": {  "__tags" : "<%= tag %>"  }}
+        <% if index < tags.count - 1 %> , <% end %>
+      <% end %>
+    }}
+}

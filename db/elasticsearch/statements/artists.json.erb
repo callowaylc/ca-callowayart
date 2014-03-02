@@ -2,8 +2,9 @@
     "size" : 0,
 
     "query": { "bool": {
-      <% @tags.each do | tag | %>
+      <% tags.each_with_index do | tag, index | %>
         "must": { "term": {  "__tags" : "<%= tag %>"  }}
+        <% if index < tags.count - 1 %> , <% end %>
       <% end %>
     }},
     
@@ -11,8 +12,8 @@
 
     // provide our group by (aggregations in elastic search)
     "aggregations": {
-        "artist": {
-            "terms": { "field":   "__artist"   },
+        "artists": {
+            "terms": { "field":   "__artist", "size": 10000   },
            
             "aggregations": {
                 "uri": {
@@ -21,15 +22,7 @@
                       "size": 1   
                     }
                    
-                },
-
-                "title": {
-                    "terms": { 
-                      "field":"__artist", 
-                      "size": 1   
-                    }
-                   
-                }                
+                }               
             }
 
         }

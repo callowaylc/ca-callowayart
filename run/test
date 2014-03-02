@@ -1,22 +1,31 @@
 #!/usr/bin/env ruby
-require 'tire'
+require 'elasticsearch'
 require 'pp'
+require 'erb'
+require 'ostruct'
 
-search = Tire.search 'callowayart' do
+# create es client
+client = Elasticsearch::Client.new
+name   = 'artists'
+params = { tags: [
+  'contemporary-art',
+]}
 
-  query do
-    boolean do 
-      must { string 'tags:fine-art' }
-      must { string 'tags:contemporary-art' }
-    end
+# parse statement file and return client
+# result
+erb = ERB.new(
+  content = File.read(
+    "#{ENV['RAILS_ROOT']}/db/elasticsearch/statements/" +
+    "#{name}.json.erb"
+  )
+)
+statement = erb.result OpenStruct.new(params).instance_eval { 
+  binding 
+}
 
-  end
 
-  facet 'artists'  do
-    terms [ '__artist', 'uri' ], size: 10
-  end
+# finally return
+result = client.search index: 'callowayart', 
+                       body:  statement
 
-  size 1000
-end
-
-pp search.results.facets
+pp result  

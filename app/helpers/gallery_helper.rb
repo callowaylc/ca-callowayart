@@ -4,18 +4,18 @@ module GalleryHelper
 
 		# get current path and uses slugified
     # caption property to build new resource
-    unless listing['count'].nil?
-		  request.path + '/' + slugify(listing['title'])
+    unless listing[:count].nil?
+		  request.path + '/' + slugify(listing[:title])
 
     else
-      '/listing'                 + '/' + 
-      slugify(listing['artist']) + '/' + 
-      slugify(listing['title'])
+      '/listing'                + '/' + 
+      slugify(listing[:artist]) + '/' + 
+      slugify(listing[:title])
     end
 	end
 
 	def description_forr listing
-    listing['description'].split("\n")[0..2].join('<br />')
+    listing[:description].split("\n")[0..2].join('<br />')
 	end
 
   protected 
