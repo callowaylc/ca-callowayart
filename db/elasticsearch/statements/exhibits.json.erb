@@ -21,8 +21,21 @@
                       "field":"uri", 
                       "size": 1   
                     }
-                   
-                }               
+                },
+
+                "artist": {
+                    "terms": { 
+                      "field":"__artist", 
+                      "size": 1   
+                    }
+                },
+
+                "thumb": {
+                    "terms": { 
+                      "field":"thumb", 
+                      "size": 1   
+                    }
+                }                          
             }
 
         }

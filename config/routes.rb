@@ -7,6 +7,10 @@ CaCallowayart::Application.routes.draw do
     tags: '/ink', group: 'collection'
   }
 
+  get "collection*tags", to: 'gallery#index', defaults: {
+    group: 'collection'
+  }
+
   get "exhibit/past/(:exhibit)", to: 'gallery#index', defaults: {
     tags: '/exhibit', group: 'exhibits'
   }

@@ -1,0 +1,9 @@
+{
+    "size" : 1,
+
+    "query": { "bool": {
+        "must": { "term": {  "artist_slug" : "<%= artist_slug %>"  }},
+        "must": { "term": {  "title_slug"  : "<%= title_slug %>"  }}
+
+    }}
+}

@@ -1,13 +1,88 @@
 #!/usr/bin/env ruby
 # Description: Migrates data from defunt callowayart database
 
-
 # REQUIRE
 require 'faraday'
 require 'tire'
 require 'json'
+require 'RMagick'
+require 'pp'
+require 'aws/s3'
+require 'uri'
+require 'pathname'
+
+# CONSTANTS
+
+
+# FUNCTION / PATCHES
+
+include Magick
+include AWS::S3
+
+$VERBOSE = nil
+
+
+Base.establish_connection!(
+	access_key_id:     ENV['AMAZON_ACCESS_KEY_ID'],	
+	secret_access_key: ENV['AMAZON_SECRET_ACCESS_KEY']
+)
+@bucket = Bucket.find('callowayart.com') or raise "failed to find bucket callowayart.com"
+
+
+class String
+  def slugify
+    self.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+  end
+end
+
+module Kernel
+  def with_cached_print
+    save_so, $stdout = $stdout, StringIO.new(' ', 'w')
+   
+    yield if block_given?
+   
+    my_so, $stdout = $stdout, save_so
+    my_so.string
+  end
+end
+
+# save image to /tmp
+def resize_image uri
+
+	# parse id, mime type from image uri
+	format = uri.split('/').last.match(/\.(.+)$/)[1]
+	id     = uri.split('/').last.sub(/\..+$/, '').slugify
+
+	# resize image and save to /tmp
+	image = Image.read(uri)[0]
+	image = image.thumbnail(150, 120)
+	image.write(
+		path = "/tmp/#{id}-thumb.#{format}"
+	)
+
+  path
+end
+
+def save_to_s3 uri, path
+	uri = URI(uri)
+
+	# get domain and save path
+	domain    = uri.scheme + '://callowayart.com.s3.amazonaws.com'
+	save_path = File.dirname(uri.path) + '/' +
+	            Pathname.new(path).basename.to_s
+	
+	# store s3
+	S3Object.store( 
+		save_path, open(path), 'callowayart.com', access: :public_read
+	)
+
+	# return reference 
+	domain + save_path
+end
 
 # MAIN
+
+
 
 # create rest client
 rest = Faraday.new 'http://cms.callowayart.com'
@@ -18,7 +93,7 @@ count = 0
 loop do
 	puts "processing images #{count * 10} through #{(count * 10) + 10}"
 
-	index  = [ ]
+	index  = [ ]  
 	images = JSON.parse(rest.get('/api/image', {
 		offset: ((count += 1) - 1) * 10,
 		limit:  10
@@ -27,17 +102,32 @@ loop do
 	# iterate through images, transform and import into 
 	# elastic search
 	images.each do | image |
+		# in the event of images not being defined on amazon
+		# we need to upload to s3 and reset 'full' uri
+		unless image['full'] =~ /s3\.amazonaws/
+			image['full'] = save_to_s3 image['full'], image['full']
+		end
+		
+		# save the image file, resize and push to s3
+		path  = resize_image image['full']
+		thumb = save_to_s3   image['full'], path
+
 		index << hash = {
 			id:          image['id'],
 			title:       image['title'],
 			description: image['description'],
 			artist:      image['artist'],
 			uri:         image['full'],
+			thumb:       thumb,
 			tags:        image['tags'],
 			type:        'art'
 		}
 
-		hash['exhibit'] = image['exhibit'] if image['exhibit']
+
+
+    hash['artist_slug'] = image['artist'].slugify if image['artist']  
+    hash['title_slug']  = image['title'].slugify  if image['title']  
+		hash['exhibit']     = image['exhibit']        if image['exhibit']
 	end
 
 	Tire.index 'callowayart' do

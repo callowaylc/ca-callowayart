@@ -5,7 +5,15 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
             "uri":{
                "index": "not_analyzed",
                "type":  "string"
-            },            
+            },
+            "thumb":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },              
+            "title_slug":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },                      
             "title": {
               "fields":{
                   "__title":{
@@ -24,6 +32,10 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
                "index": "not_analyzed",
                "type":  "string"
             },
+            "artist_slug":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },            
             "artist": {
               "fields":{
                   "__artist":{

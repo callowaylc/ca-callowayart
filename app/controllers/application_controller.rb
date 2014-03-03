@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
             title: bucket['title'],
             description: bucket['description'],
             image: bucket['uri'],
+            thumb: bucket['thumb'],
             artist: bucket['artist'] 
           }
         end
@@ -46,9 +47,11 @@ class ApplicationController < ActionController::Base
 
         result['aggregations'][name]['buckets'].each do | bucket |
           data << {
-            title: bucket['key'],
-            count: bucket['doc_count'],
-            image: bucket['uri']['buckets'][0]['key'],
+            title:  bucket['key'],
+            count:  bucket['doc_count'],
+            image:  bucket['uri']['buckets'][0]['key'],
+            thumb:  bucket['thumb']['buckets'][0]['key'],
+            artist: bucket['artist']['buckets'][0]['key'],
             description: bucket['key']
           }
         end

@@ -5,7 +5,7 @@ module GalleryHelper
 		# get current path and uses slugified
     # caption property to build new resource
     unless listing[:count].nil?
-		  request.path + '/' + slugify(listing[:title])
+		  (request.path + '/' + slugify(listing[:title])).gsub 'gallery', 'collection'
 
     else
       '/listing'                + '/' + 
@@ -21,8 +21,7 @@ module GalleryHelper
   protected 
 
     def slugify string
-      #string.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
-      string.downcase.strip.gsub(' ', '-')
+      string.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
     end
 
 end

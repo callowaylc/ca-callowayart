@@ -9,15 +9,15 @@
 			<td align="center">
 				<br />
 				<div style='font: 20pt Arial bold; font-variant:small-caps; '>
-				<%= @artist %> / <%= @listing['title'].downcase %></div>
-				<img src="<%= @listing['full'] %>" />
+				<%= @listing[:artist] %> / <%= @listing[:title].downcase %></div>
+				<img src="<%= @listing[:image] %>" />
 			</td>
 			</tr>
 
 			<tr>
 			<td align="left">
 				<div style='margin:10px'>
-					<b><%= raw(description_for @listing) %></b>					
+					<b><%= raw(description_forr @listing) %></b>					
 				</div>
 			</td>
 			</tr>
