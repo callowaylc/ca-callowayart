@@ -6,6 +6,7 @@ CaCallowayart::Application.routes.draw do
   get "exhibit/current", to: 'gallery#index', defaults: {
     tags: '/ink', group: 'collection'
   }
+  get "search", to: 'gallery#index'
 
   get "collection*tags", to: 'gallery#index', defaults: {
     group: 'collection'

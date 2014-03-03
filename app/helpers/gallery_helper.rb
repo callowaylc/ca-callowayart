@@ -2,15 +2,24 @@ module GalleryHelper
 
 	def uri_for listing
 
+    # somehow still listings with nil artist
+    # setting to anonymous if the case
+    listing[:artist] ||= 'na'
+
 		# get current path and uses slugified
     # caption property to build new resource
-    unless listing[:count].nil?
-		  (request.path + '/' + slugify(listing[:title])).gsub 'gallery', 'collection'
+    begin 
+      unless listing[:count].nil?
+  		  (request.path + '/' + slugify(listing[:title])).gsub 'gallery', 'collection'
 
-    else
-      '/listing'                + '/' + 
-      slugify(listing[:artist]) + '/' + 
-      slugify(listing[:title])
+      else
+        '/listing'                + '/' + 
+        slugify(listing[:artist]) + '/' + 
+        slugify(listing[:title])
+      end
+
+    rescue
+      
     end
 	end
 

@@ -2,7 +2,11 @@
     "size" : 1,
 
     "query": { "bool": {
-        "must": { "term": {  "artist_slug" : "<%= artist_slug %>"  }},
+
+    	<% if artist_slug %>
+        	"must": { "term": {  "artist_slug" : "<%= artist_slug %>"  }},
+        <% end %>
+
         "must": { "term": {  "title_slug"  : "<%= title_slug %>"  }}
 
     }}

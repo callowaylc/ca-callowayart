@@ -7,8 +7,15 @@ class GalleryController < ApplicationController
     @tags  = tags
 
     params[:group] = 'collection' if params[:exhibit].present?
+    params[:group] = 'search'     if params[:q].present?
 
+    if request.path =~ /^\/search/ && params[:q].present?
+      params[:group] = 'search'
+      @tags          = [ params[:q] ]
+    end
+      
     @listings = query params[:group], { tags: @tags }
+    
   end
 
   protected
