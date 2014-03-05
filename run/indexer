@@ -55,7 +55,14 @@ def resize_image uri
 
 	# resize image and save to /tmp
 	image = Image.read(uri)[0]
-	image = image.thumbnail(150, 120)
+	
+	# calculate width/height based on percentage of 
+	# difference of width from absolute value of 150
+	width  = 150
+	scale  = (image.page.width - width) / image.page.width.to_f
+	height = image.page.height - (image.page.height * scale)
+
+	image = image.thumbnail(width, height)
 	image.write(
 		path = "/tmp/#{id}-thumb.#{format}"
 	)
@@ -96,7 +103,8 @@ loop do
 	index  = [ ]  
 	images = JSON.parse(rest.get('/api/image', {
 		offset: ((count += 1) - 1) * 10,
-		limit:  10
+		limit:  10,
+		recent: ARGV.include?('recent')
 	}).body)
 
 	# iterate through images, transform and import into 
@@ -107,7 +115,7 @@ loop do
 		unless image['full'] =~ /s3\.amazonaws/
 			image['full'] = save_to_s3 image['full'], image['full']
 		end
-		
+
 		# save the image file, resize and push to s3
 		path  = resize_image image['full']
 		thumb = save_to_s3   image['full'], path

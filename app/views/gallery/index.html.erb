@@ -69,7 +69,7 @@
 									<div id="mycarousel1" class="carousel-component">
 										<div class="carousel-clip-region" >
 											<a href="<%= uri_for listing %>" >
-												<img src="<%= listing[:thumb] %>" style='width:150px; height:120px' />
+												<img src="<%= listing[:thumb] %>"  />
 											</a>
 										</div>
 									</div>
@@ -82,15 +82,12 @@
 									<br />
 
 
-									<% unless listing[:count].nil? %>
-										<%= image_tag 'arrow-left.jpg' %>
-										Scroll Through Collection&nbsp;
-										<%= image_tag 'arrow-right.jpg' %>
-										<br />		
-																	
+									<% unless listing[:count].nil? %>																	
 										<a href="<%= uri_for listing %>">
 											View all <%= listing[:count] %> Pieces
 										</a>
+
+										<br /><br />
 									<% end %>
 								</td>
 
