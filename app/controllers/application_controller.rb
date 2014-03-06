@@ -42,6 +42,7 @@ class ApplicationController < ActionController::Base
             thumb: bucket['thumb'],
             artist: bucket['artist'] 
           }
+          data[:exhibit] = bucket['exhibit'] unless bucket['exhibit'].nil?
         end
 
       else
