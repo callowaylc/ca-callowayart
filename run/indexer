@@ -47,7 +47,7 @@ module Kernel
 end
 
 # save image to /tmp
-def resize_image uri
+def resize_image uri, options = { }
 
 	# parse id, mime type from image uri
 	format = uri.split('/').last.match(/\.(.+)$/)[1]
@@ -58,14 +58,25 @@ def resize_image uri
 	
 	# calculate width/height based on percentage of 
 	# difference of width from absolute value of 150
-	width  = 150
-	scale  = (image.page.width - width) / image.page.width.to_f
-	height = image.page.height - (image.page.height * scale)
+	unless options[:height].nil?
+		height = 120
+		scale  = (image.page.height - height) / image.page.height.to_f
+		width  = image.page.width - (image.page.width * scale)
 
-	image = image.thumbnail(width, height)
-	image.write(
-		path = "/tmp/#{id}-thumb.#{format}"
-	)
+		image = image.thumbnail(width, height)
+		image.write(
+			path = "/tmp/#{id}-thumbh.#{format}"
+		)
+	else
+		width  = 150
+		scale  = (image.page.width - width) / image.page.width.to_f
+		height = image.page.height - (image.page.height * scale)
+
+		image = image.thumbnail(width, height)
+		image.write(
+			path = "/tmp/#{id}-thumb.#{format}"
+		)
+	end
 
   path
 end
@@ -120,6 +131,9 @@ loop do
 		path  = resize_image image['full']
 		thumb = save_to_s3   image['full'], path
 
+		path  = resize_image image['full'],  height: 120
+		thumbh = save_to_s3   image['full'], path
+
 		index << hash = {
 			id:          image['id'],
 			title:       image['title'],
@@ -127,6 +141,7 @@ loop do
 			artist:      image['artist'],
 			uri:         image['full'],
 			thumb:       thumb,
+			thumbh:      thumbh,
 			tags:        image['tags'],
 			type:        'art'
 		}

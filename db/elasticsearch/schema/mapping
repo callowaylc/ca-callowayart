@@ -9,7 +9,11 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
             "thumb":{
                "index": "not_analyzed",
                "type":  "string"
-            },              
+            },    
+            "thumbh":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },                       
             "title_slug":{
                "index": "not_analyzed",
                "type":  "string"
