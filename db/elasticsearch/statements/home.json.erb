@@ -1,0 +1,9 @@
+{
+    "size" : "<%= size %>",
+
+    "query": { "bool": {
+
+      "must_not": { "term": { "__tags" : "backendonly" }}
+
+    }}
+}
