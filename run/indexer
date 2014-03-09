@@ -100,11 +100,11 @@ count = 0
 loop do
 	puts "processing images #{count * 10} through #{(count * 10) + 10}"
 
-	index  = [ ]  
+	index  = [ ] 
 	images = JSON.parse(rest.get('/api/image', {
 		offset: ((count += 1) - 1) * 10,
 		limit:  10,
-		recent: ARGV.include?('recent')
+		recent: ARGV[0] == 'recent' && 1 || 0
 	}).body)
 
 	# iterate through images, transform and import into 

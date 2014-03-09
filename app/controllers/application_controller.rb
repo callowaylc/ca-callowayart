@@ -35,14 +35,14 @@ class ApplicationController < ActionController::Base
         result['hits']['hits'].each do | hash |
           bucket = hash['_source']
 
-          data << {
+          data << record = {
             title: bucket['title'],
             description: bucket['description'],
             image: bucket['uri'],
             thumb: bucket['thumb'],
             artist: bucket['artist'] 
           }
-          data[:exhibit] = bucket['exhibit'] unless bucket['exhibit'].nil?
+          record[:exhibit] = ['exhibit'] unless bucket['exhibit'].nil?
         end
 
       else
