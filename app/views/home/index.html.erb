@@ -11,7 +11,16 @@
 			<tr>
 				<td colspan="2" >
 					<%= image_tag "960x65topbar.gif"                      %>
-					<div style="margin-top:-4px"><%= image_tag "960x120_imagebar#{[*1..5].sample}.jpg" %></div>
+					<div style="width:960px; height:120px; overflow:hidden;margin-top:-4px">
+					<div style="width:1200px;">
+						<% @listings.each do | listing | %>
+							<div style='float:left'>
+								<a href="/listing/<%= slugify listing[:artist] %>/<%= slugify listing[:title] %>"><%= image_tag listing[:thumbh] %></a>
+							</div>
+						<% end %>
+						<div style="clear:both"></div>
+					</div>
+					</div>
 					<div style="margin-top:-4px" ><%= image_tag "960x15bottombar.gif"   %></div>
 				</td>
 				</tr>

@@ -58,8 +58,18 @@ def resize_image uri, options = { }
 	
 	# calculate width/height based on percentage of 
 	# difference of width from absolute value of 150
-	unless options[:height].nil?
-		height = 120
+	if options[:width]
+		width  = options[:width]
+		scale  = (image.page.width - width) / image.page.width.to_f
+		height = image.page.height - (image.page.height * scale)
+
+		image = image.thumbnail(width, height)
+		image.write(
+			path = "/tmp/#{id}-constrainedw.#{format}"
+		)		
+
+	elsif options[:height]
+		height = options[:height]
 		scale  = (image.page.height - height) / image.page.height.to_f
 		width  = image.page.width - (image.page.width * scale)
 
@@ -67,6 +77,7 @@ def resize_image uri, options = { }
 		image.write(
 			path = "/tmp/#{id}-thumbh.#{format}"
 		)
+
 	else
 		width  = 150
 		scale  = (image.page.width - width) / image.page.width.to_f
@@ -76,6 +87,7 @@ def resize_image uri, options = { }
 		image.write(
 			path = "/tmp/#{id}-thumb.#{format}"
 		)
+
 	end
 
   path
@@ -131,19 +143,23 @@ loop do
 		path  = resize_image image['full']
 		thumb = save_to_s3   image['full'], path
 
-		path  = resize_image image['full'],  height: 120
-		thumbh = save_to_s3   image['full'], path
+		path   = resize_image image['full'],  height: 120
+		thumbh = save_to_s3  image['full'], path
+
+		path         = resize_image image['full'],  width: 600
+		constrainedw = save_to_s3   image['full'], path		
 
 		index << hash = {
-			id:          image['id'],
-			title:       image['title'],
-			description: image['description'],
-			artist:      image['artist'],
-			uri:         image['full'],
-			thumb:       thumb,
-			thumbh:      thumbh,
-			tags:        image['tags'],
-			type:        'art'
+			id:           image['id'],
+			title:        image['title'],
+			description:  image['description'],
+			artist:       image['artist'],
+			uri:          image['full'],
+			thumb:        thumb,
+			thumbh:       thumbh,
+			constrainedw: constrainedw, 
+			tags:         image['tags'],
+			type:         'art'
 		}
 
 

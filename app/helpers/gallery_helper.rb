@@ -37,10 +37,4 @@ module GalleryHelper
     description.join '<br />'
 	end
 
-  protected 
-
-    def slugify string
-      string.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
-    end
-
 end

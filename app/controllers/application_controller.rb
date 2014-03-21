@@ -5,8 +5,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   protected 
+    def dont_cache
+      cache_for 0
+    end
 
-    def query name, params
+    def cache_for seconds
+      response.headers['X-Varnish-TTL'] = seconds.to_s + 's'
+    end
+
+    def query name, params = {}
+      name = name.to_s
+
       # create es client
       client = Elasticsearch::Client.new
       erb    = ERB.new(
@@ -40,9 +49,10 @@ class ApplicationController < ActionController::Base
             description: bucket['description'],
             image: bucket['uri'],
             thumb: bucket['thumb'],
-            artist: bucket['artist'] 
+            artist: bucket['artist'],
+            thumbh: bucket['thumbh']
           }
-          record[:exhibit] = ['exhibit'] unless bucket['exhibit'].nil?
+          record[:exhibit] = bucket['exhibit'] unless bucket['exhibit'].nil?
         end
 
       else

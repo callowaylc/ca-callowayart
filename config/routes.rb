@@ -2,6 +2,9 @@ CaCallowayart::Application.routes.draw do
   get "gallery*tags", to: 'gallery#index', defaults: {
     page: 1, group: 'artists'
   }
+  get "gallery", to: 'gallery#index', defaults: {
+    group: 'artists'
+  }
 
   get "exhibit/current", to: 'gallery#index', defaults: {
     tags: '/ink', group: 'collection'

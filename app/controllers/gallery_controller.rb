@@ -2,20 +2,28 @@ class GalleryController < ApplicationController
   LIMIT = 30
 
   def index
+    params[:group] = 'collection' if params[:exhibit].present?
+
     # assign view params
   	@page  = params[:page]
-    @tags  = tags
+    @tags  = [ ]
 
-    params[:group] = 'collection' if params[:exhibit].present?
-    params[:group] = 'search'     if params[:q].present?
+    if tags.count > 0
+      @tags = tags 
+    end
+
 
     if request.path =~ /^\/search/ && params[:q].present?
       params[:group] = 'search'
       @tags          = [ params[:q] ]
     end
       
-    @listings = query params[:group], { tags: @tags }
-    
+    @listings = query params[:group], { tags: @tags } 
+
+    if params[:group] == 'collection'
+      (request.path =~ /collection/ && @group = 'artist') || @group = 'exhibit'
+    end
+
   end
 
   protected
