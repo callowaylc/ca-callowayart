@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
           data << record = {
             title: bucket['title'],
             description: bucket['description'],
-            image: bucket['uri'],
+            image: bucket['constrainedw'],
             thumb: bucket['thumb'],
             artist: bucket['artist'],
             thumbh: bucket['thumbh']
