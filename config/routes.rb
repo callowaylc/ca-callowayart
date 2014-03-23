@@ -7,7 +7,7 @@ CaCallowayart::Application.routes.draw do
   }
 
   get "exhibit/current", to: 'gallery#index', defaults: {
-    tags: '/ink', group: 'collection'
+    tags: '/rodgers-naylor-interactions-2', group: 'collection'
   }
   get "search", to: 'gallery#index'
 
