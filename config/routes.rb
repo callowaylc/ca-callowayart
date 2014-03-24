@@ -1,4 +1,5 @@
 CaCallowayart::Application.routes.draw do
+  get "auth/constantcontact"
   get "gallery*tags", to: 'gallery#index', defaults: {
     page: 1, group: 'artists'
   }
@@ -23,8 +24,9 @@ CaCallowayart::Application.routes.draw do
     group: 'collection'
   }
 
-  get "about",   to: 'home#about'
-  get "contact", to: 'home#contact' 
+  get  "about",   to: 'home#about'
+  get  "contact", to: 'home#contact' 
+  post "join",    to: 'home#join'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
