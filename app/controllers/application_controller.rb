@@ -33,7 +33,6 @@ class ApplicationController < ActionController::Base
       result    = client.search index: 'callowayart', 
                                 body:  statement
 
-
       # now massage result set into a simpler data structure
       data = [ ]
 

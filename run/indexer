@@ -152,6 +152,7 @@ loop do
 		index << hash = {
 			id:           image['id'],
 			title:        image['title'],
+			title_slug:   image['title'].slugify,
 			description:  image['description'],
 			artist:       image['artist'],
 			uri:          image['full'],
@@ -159,14 +160,17 @@ loop do
 			thumbh:       thumbh,
 			constrainedw: constrainedw, 
 			tags:         image['tags'],
-			type:         'art'
+			type:         'art',
+			artist_description: image['artist_description']
 		}
 
+		%w{ 
+			artist_slug title_slug exhibit exhibit_slug exhibit_description
 
+		}.each do | field |
+			hash[field] = image[field] if image[field]
+		end
 
-    hash['artist_slug'] = image['artist'].slugify if image['artist']  
-    hash['title_slug']  = image['title'].slugify  if image['title']  
-		hash['exhibit']     = image['exhibit']        if image['exhibit']
 	end
 
 	Tire.index 'callowayart' do
@@ -175,5 +179,7 @@ loop do
 
 	break if images.count == 0
 end
+
+Dir.glob('/tmp/*.jpg').each { |f| File.delete(f) }
 
 puts "done"
