@@ -42,8 +42,7 @@ class ApplicationController < ActionController::Base
       if result['aggregations'].nil?
         result['hits']['hits'].each do | hash |
           bucket = hash['_source']
-
-          data << record = {
+          record = {
             title: bucket['title'],
             description: bucket['description'],
             image: bucket['constrainedw'],
@@ -51,7 +50,15 @@ class ApplicationController < ActionController::Base
             artist: bucket['artist'],
             thumbh: bucket['thumbh']
           }
-          record[:exhibit] = bucket['exhibit'] unless bucket['exhibit'].nil?
+
+          %w{ 
+            artist_description exhibit exhibit_description 
+
+          }.each do | field |
+            record[field.to_sym] = bucket[field] unless bucket[field].nil?
+          end
+
+          data << record
         end
 
       else

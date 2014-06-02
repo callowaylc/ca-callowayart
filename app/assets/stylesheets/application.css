@@ -46,3 +46,21 @@ img.portfolio-image {
 img.highlighted {
    border:3px red solid;
 }
+
+.side-description {
+	margin-top:10px;
+	margin-left:20px;
+	margin-right:10px;
+	font-weight:bold;
+}
+
+.side-description-title {
+	font-variant: small-caps;
+
+	margin-bottom: 10px;
+	margin-top:10px;
+	margin-left:20px;
+	margin-right:10px;
+	font-weight:bold;	
+	font-size: 16px;
+}
