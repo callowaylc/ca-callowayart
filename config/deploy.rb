@@ -62,7 +62,6 @@ namespace :deploy do
 
       # restart unicorn server
       # desc 'kicking varnish tires'
-      execute 'bundle install'
       execute 'rails s &'
     end
   end
