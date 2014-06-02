@@ -140,14 +140,19 @@ loop do
 		end
 
 		# save the image file, resize and push to s3
-		path  = resize_image image['full']
-		thumb = save_to_s3   image['full'], path
+		begin
+			path  = resize_image image['full']
+			thumb = save_to_s3   image['full'], path
 
-		path   = resize_image image['full'],  height: 120
-		thumbh = save_to_s3  image['full'], path
+			path   = resize_image image['full'],  height: 120
+			thumbh = save_to_s3  image['full'], path
 
-		path         = resize_image image['full'],  width: 600
-		constrainedw = save_to_s3   image['full'], path		
+			path         = resize_image image['full'],  width: 600
+			constrainedw = save_to_s3   image['full'], path		
+
+		rescue Exception => ignore
+			next
+		end
 
 		index << hash = {
 			id:           image['id'],
@@ -165,7 +170,10 @@ loop do
 		}
 
 		# add unknown to tags if no artist has been specified
-		hash[:tags] << 'unknown' unless image['artist']
+		unless image['artist']
+			hash[:tags] << 'unknown'
+			image['artist_slug'] = 'unknown'
+		end
 
 		%w{ 
 			artist_slug title_slug exhibit exhibit_slug exhibit_description
