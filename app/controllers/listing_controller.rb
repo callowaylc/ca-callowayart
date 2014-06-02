@@ -9,10 +9,10 @@ class ListingController < ApplicationController
       title_slug:  params[:slug]
     })[0]
 
-
     # get associated art from the artist
-    @listings = query :collection, { 
-      tags: [ params[:artist] ]
-    }
+    @listings = query :collection, tags: [ params[:artist] ]
+    @slug     = params[:slug]
+    @artist   = params[:artist]
+  
   end
 end
