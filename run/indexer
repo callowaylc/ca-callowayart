@@ -153,15 +153,15 @@ loop do
 			id:           image['id'],
 			title:        image['title'],
 			title_slug:   image['title'].slugify,
-			description:  image['description'],
-			artist:       image['artist'],
+			description:  image['description'] || "description",
+			artist:       image['artist'] || "artist",
 			uri:          image['full'],
 			thumb:        thumb,
 			thumbh:       thumbh,
 			constrainedw: constrainedw, 
 			tags:         image['tags'],
 			type:         'art',
-			artist_description: image['artist_description']
+			artist_description: image['artist_description'] || "artist-description"
 		}
 
 		%w{ 

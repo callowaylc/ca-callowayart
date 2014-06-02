@@ -8,7 +8,7 @@ CaCallowayart::Application.routes.draw do
   }
 
   get "exhibit/current", to: 'gallery#index', defaults: {
-    tags: '/rodgers-naylor-interactions-2', group: 'collection'
+    tags: '/relativity-colin-taylor-and-daniel-calder', group: 'collection'
   }
   get "search", to: 'gallery#index'
 

@@ -23,18 +23,22 @@ module GalleryHelper
     end
 	end
 
-	def description_forr listing
+  def description_forr listing
     description = [ ]
-    
+ 
     listing[:description].split("\n").each do | listing |
-      if listing !~ /\:/ ||
-         listing =~ /\:/ && listing.split(':')[1].strip.length > 1
+      #begin
+        if listing !~ /\:/ ||
+           (listing =~ /\:/ && listing.split(':').count  > 1) 
          
-        description << listing.strip 
-      end
+          description << listing.strip 
+        end
+      #rescue Exception => ignore
+      #end
+
     end
 
     description.join '<br />'
-	end
+  end
 
 end
