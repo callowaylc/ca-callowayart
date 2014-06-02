@@ -2,13 +2,13 @@
 # app details and WordPress requirements
 
 # tags/3.5.1, branches/3.5, trunk
-set :application, "showbizdaily.net"
+set :application, "callowayart.com"
 
 #=============================================================================
 # app source repository configuration
 
 set :scm, :git
-set :repo_url, "git@github.com:callowaylc/showbizdaily.git"
+set :repo_url, "git@github.com:callowaylc/ca-callowayart.git"
 #set :git_enable_submodules, 1
 #set :git_shallow_clone, 1
 
@@ -22,7 +22,7 @@ set :keep_releases, 5
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/ubuntu/Develop/showbizdaily'
+set :deploy_to, '/home/ubuntu/Develop/ca-callowayart'
 
 # Default value for :scm is :git
 set :scm,    :git
@@ -53,6 +53,30 @@ namespace :deploy do
       execute 'sudo service varnish restart'
     end
   end
+
+  desc 'Kick unicorn'
+  task :restart do
+    on roles(:web), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      # execute :touch, release_path.join('tmp/restart.txt')
+
+      # restart unicorn server
+      # desc 'kicking varnish tires'
+      execute 'rails s &'
+    end
+  end
+
+  desc 'Kick nginx'
+  task :restart do
+    on roles(:web), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      # execute :touch, release_path.join('tmp/restart.txt')
+
+      # restart unicorn server
+      # desc 'kicking varnish tires'
+      execute 'sudo service nginx restart'
+    end
+  end  
 
   desc "Check that we can access everything"
   task :check_write_permissions do
