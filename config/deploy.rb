@@ -62,6 +62,8 @@ namespace :deploy do
 
       # restart unicorn server
       # desc 'kicking varnish tires'
+      execute 'cd /var/www/callowayart'
+      execute 'ln -s ~/Develop/ca-callowayart/tmp'
       execute 'rails s &'
     end
   end
