@@ -38,3 +38,11 @@ a:hover{	color:#333333; text-decoration:underline;}
 .gallery{
 	padding-bottom:2px;
 }
+
+img.portfolio-image {
+	border:3px white solid;
+}
+
+img.highlighted {
+   border:3px red solid;
+}
