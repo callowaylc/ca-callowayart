@@ -5,8 +5,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   protected 
+    def dont_cache
+      cache_for 0
+    end
 
-    def query name, params
+    def cache_for seconds
+      response.headers['X-Varnish-TTL'] = seconds.to_s + 's'
+    end
+
+    def query name, params = {}
+      name = name.to_s
+
       # create es client
       client = Elasticsearch::Client.new
       erb    = ERB.new(
@@ -24,7 +33,6 @@ class ApplicationController < ActionController::Base
       result    = client.search index: 'callowayart', 
                                 body:  statement
 
-
       # now massage result set into a simpler data structure
       data = [ ]
 
@@ -35,14 +43,15 @@ class ApplicationController < ActionController::Base
         result['hits']['hits'].each do | hash |
           bucket = hash['_source']
 
-          data << {
+          data << record = {
             title: bucket['title'],
             description: bucket['description'],
-            image: bucket['uri'],
+            image: bucket['constrainedw'],
             thumb: bucket['thumb'],
-            artist: bucket['artist'] 
+            artist: bucket['artist'],
+            thumbh: bucket['thumbh']
           }
-          data[:exhibit] = bucket['exhibit'] unless bucket['exhibit'].nil?
+          record[:exhibit] = bucket['exhibit'] unless bucket['exhibit'].nil?
         end
 
       else

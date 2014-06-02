@@ -6,12 +6,21 @@
 		<td><table width="960" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 			<tr>
 				<td><%= image_tag "call_brand.jpg" %></td>
-				<td><%= image_tag "call_home_nav.jpg", :usemap => "Map" %></td>
+				<td><%= image_tag "call_home_nav.jpg", :usemap => "#Map" %></td>
 				</tr>
 			<tr>
 				<td colspan="2" >
 					<%= image_tag "960x65topbar.gif"                      %>
-					<div style="margin-top:-4px"><%= image_tag "960x120_imagebar#{[*1..5].sample}.jpg" %></div>
+					<div style="width:960px; height:120px; overflow:hidden;margin-top:-4px">
+					<div style="width:1200px;">
+						<% @listings.each do | listing | %>
+							<div style='float:left'>
+								<a href="/listing/<%= slugify listing[:artist] %>/<%= slugify listing[:title] %>"><%= image_tag listing[:thumbh] %></a>
+							</div>
+						<% end %>
+						<div style="clear:both"></div>
+					</div>
+					</div>
 					<div style="margin-top:-4px" ><%= image_tag "960x15bottombar.gif"   %></div>
 				</td>
 				</tr>
@@ -30,7 +39,7 @@
 	</tr>
 </table>
 
-<map name="Map" id="Map"><area shape="rect" coords="83,212,184,245" href="/gallery/fine-art" />
+<map name="Map" id="Map"><area shape="rect" coords="83,212,184,245" href="/gallery/contemporary-art" />
 <area shape="rect" coords="193,211,274,250" href="/gallery/custom-framing-and-mirrors" />
 <area shape="rect" coords="284,211,363,245" href="/about" /><area shape="rect" coords="371,213,504,247" href="/contact" />
 </map><!---->

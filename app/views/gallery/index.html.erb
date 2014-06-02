@@ -20,8 +20,8 @@
 		<td><table width="960" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 			<tr valign="top" align="right">
 				<td width="360" >
-					<%= image_tag "call_brand.jpg", :usemap => "Map2" %>
-					<%= image_tag "call_nav_2.jpg", :usemap => "Map" %>
+					<%= image_tag "call_brand.jpg", :usemap => "#Map2" %>
+					<%= image_tag "call_nav_2.jpg", :usemap => "#Map" %>
 
 					<a href="/gallery/contemporary-art" >
 						<%= image_tag "call_nav_2_cont_off.jpg", class: 'navigation-contemporary' %>
@@ -51,7 +51,7 @@
 
 					<%= image_tag "call_nav_2_join.jpg", class: 'navigation-join' %>
 				
-					<form action="/join" method=post>
+					<form action="/join" method="post">
 					<p>
 						<input type="text" name="email" />
 						<input type="image" src="/assets/call_nav_2_submit.jpg"  width="103" height="35" border="0" align="absmiddle" />
@@ -79,7 +79,7 @@
 									<a href="<%= uri_for listing %>" >
 										<b><%= raw(description_forr listing) %></b>
 									</a>
-									<br />
+									<br /><br />
 
 
 									<% unless listing[:count].nil? %>																	
@@ -99,6 +99,17 @@
 				<td width="245">
 					<table width="100%" cellpadding="15" cellspacing="0" border="0">
 						<tr><td>
+							<!--
+							<% if @group %>
+								<div class='group-title'>
+									<%= @listings[0][@group.to_sym] %>
+								</div>
+
+								<div class='group-description' >
+									<%= @listings[0][(@group + '_description').to_sym] %>
+								</div>
+							<% end %>
+							-->
 						</td></tr>
 					</table>				
 				</td>
@@ -121,7 +132,7 @@
 </table>
 
 
-<map name="Map" id="Map"><area shape="rect" coords="81,31,166,52" href="/gallery/fine-art" />
+<map name="Map" id="Map"><area shape="rect" coords="81,31,166,52" href="/gallery/contemporary-art" />
 	<area shape="rect" coords="172,33,247,52" href="/gallery/custom-framing-and-mirror-design" />
 	<area shape="rect" coords="251,34,352,50" href="/about" />
 </map>

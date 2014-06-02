@@ -1,1 +1,65 @@
-contact page
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>&nbsp;<p /><p /></td>
+	</tr>
+	<tr align="center">
+		<td><table width="960" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+			<tr>
+				<td width="360" valign="top" align="right">
+					<%= image_tag "call_brand.jpg", :usemap => "#Map2" %>
+					<%= image_tag "call_nav_2.jpg", :usemap => "#Map" %>
+					<%= image_tag "call_nav_2_about.jpg" %>
+					<%= image_tag "call_nav_2_join.jpg" %>
+
+  				<form action="join.php" method=post>
+  					<p>
+  						<input type="text" name="email" />
+  						<input type="image" src="assets/call_nav_2_submit.jpg"  width="103" height="35" border="0" align="absmiddle" />
+  					</p>
+  				</form>
+        </td>
+				<td width="205"><%= image_tag "15x600_lefttbar.jpg" %><%= image_tag "about_pics2.jpg" %><%= image_tag "40x600_rightbar.jpg" %>
+        </td>
+				<td width="395" valign="top">
+          <%= image_tag "395x270_white.jpg" %>
+          <table width="100%" cellpadding="15" cellspacing="15" border="0">
+            <tr><td>
+            <b>Contact The Gallery</b><p>
+            1643 Wisconsin Ave<br />
+            Washington DC 20007<br />
+            v 202 965 4601<br />
+            f 202 338 1660<br />
+            <a href=mailto:gallery@callowayart.com>gallery@callowayart.com</a><br />
+            <br />
+            <br />
+            10 am to 6 pm Tuesday through Saturday<br />
+            <br />
+            <br />
+            <br />
+            <a href=http://maps.google.com/maps?f=q&hl=en&geocode=&q=1643+Wisconsin+Ave,+20007&sll=37.0625,-95.677068&sspn=76.482111,114.609375&ie=UTF8&z=16&iwloc=addr target=_blank>Click here for a map to our gallery</a><br />
+            </td></tr>
+          </table>				
+        </td>
+				</tr>
+			
+		</table></td>
+	</tr>
+  <tr align="center">
+    <td>
+      Susan Calloway Fine Arts | 1643 Wisconsin Ave NW | Washington DC <%= Date.current.year %> | 202 965 4601 <br />
+      <a href="/gallery/fine-art">Fine Art</a> | 
+      <a href="/contact">Contact</a> | 
+      <a href="/about">About</a> | 
+      <a href="/gallery/custom-framing-and-mirror-design">Design</a>
+    </td>
+  </tr>
+</table>
+
+
+<map name="Map" id="Map"><area shape="rect" coords="81,31,166,52" href="/gallery/fine-art" />
+  <area shape="rect" coords="172,33,247,52" href="/gallery/custom-framing-and-mirror-design" />
+  <area shape="rect" coords="251,34,352,50" href="/about" />
+</map>
+<map name="Map2" id="Map2">
+  <area shape="rect" coords="79,223,324,245" href="/" />
+</map>            

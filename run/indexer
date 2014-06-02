@@ -47,7 +47,7 @@ module Kernel
 end
 
 # save image to /tmp
-def resize_image uri
+def resize_image uri, options = { }
 
 	# parse id, mime type from image uri
 	format = uri.split('/').last.match(/\.(.+)$/)[1]
@@ -58,14 +58,37 @@ def resize_image uri
 	
 	# calculate width/height based on percentage of 
 	# difference of width from absolute value of 150
-	width  = 150
-	scale  = (image.page.width - width) / image.page.width.to_f
-	height = image.page.height - (image.page.height * scale)
+	if options[:width]
+		width  = options[:width]
+		scale  = (image.page.width - width) / image.page.width.to_f
+		height = image.page.height - (image.page.height * scale)
 
-	image = image.thumbnail(width, height)
-	image.write(
-		path = "/tmp/#{id}-thumb.#{format}"
-	)
+		image = image.thumbnail(width, height)
+		image.write(
+			path = "/tmp/#{id}-constrainedw.#{format}"
+		)		
+
+	elsif options[:height]
+		height = options[:height]
+		scale  = (image.page.height - height) / image.page.height.to_f
+		width  = image.page.width - (image.page.width * scale)
+
+		image = image.thumbnail(width, height)
+		image.write(
+			path = "/tmp/#{id}-thumbh.#{format}"
+		)
+
+	else
+		width  = 150
+		scale  = (image.page.width - width) / image.page.width.to_f
+		height = image.page.height - (image.page.height * scale)
+
+		image = image.thumbnail(width, height)
+		image.write(
+			path = "/tmp/#{id}-thumb.#{format}"
+		)
+
+	end
 
   path
 end
@@ -100,11 +123,11 @@ count = 0
 loop do
 	puts "processing images #{count * 10} through #{(count * 10) + 10}"
 
-	index  = [ ]  
+	index  = [ ] 
 	images = JSON.parse(rest.get('/api/image', {
 		offset: ((count += 1) - 1) * 10,
 		limit:  10,
-		recent: ARGV.include?('recent')
+		recent: ARGV[0] == 'recent' && 1 || 0
 	}).body)
 
 	# iterate through images, transform and import into 
@@ -120,22 +143,34 @@ loop do
 		path  = resize_image image['full']
 		thumb = save_to_s3   image['full'], path
 
+		path   = resize_image image['full'],  height: 120
+		thumbh = save_to_s3  image['full'], path
+
+		path         = resize_image image['full'],  width: 600
+		constrainedw = save_to_s3   image['full'], path		
+
 		index << hash = {
-			id:          image['id'],
-			title:       image['title'],
-			description: image['description'],
-			artist:      image['artist'],
-			uri:         image['full'],
-			thumb:       thumb,
-			tags:        image['tags'],
-			type:        'art'
+			id:           image['id'],
+			title:        image['title'],
+			title_slug:   image['title'].slugify,
+			description:  image['description'] || "description",
+			artist:       image['artist'] || "artist",
+			uri:          image['full'],
+			thumb:        thumb,
+			thumbh:       thumbh,
+			constrainedw: constrainedw, 
+			tags:         image['tags'],
+			type:         'art',
+			artist_description: image['artist_description'] || "artist-description"
 		}
 
+		%w{ 
+			artist_slug title_slug exhibit exhibit_slug exhibit_description
 
+		}.each do | field |
+			hash[field] = image[field] if image[field]
+		end
 
-    hash['artist_slug'] = image['artist'].slugify if image['artist']  
-    hash['title_slug']  = image['title'].slugify  if image['title']  
-		hash['exhibit']     = image['exhibit']        if image['exhibit']
 	end
 
 	Tire.index 'callowayart' do
@@ -144,5 +179,7 @@ loop do
 
 	break if images.count == 0
 end
+
+Dir.glob('/tmp/*.jpg').each { |f| File.delete(f) }
 
 puts "done"

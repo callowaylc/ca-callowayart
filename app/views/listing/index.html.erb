@@ -1,24 +1,54 @@
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
-		<td>&nbsp;<p /><p /></td>
+		<td align="center">
+		<table width="960" cellpadding="0" cellspacing="0" >
+		<tr>
+			<td width="360">&nbsp;<p /><p /></td>
+			<td width="355">&nbsp;<p /><p /></td>
+			<td width="245" align="right">
+				<div style="margin-top:10px; margin-bottom:10px">
+					<form action="/search" >
+						<input type="text"   name="q"       />
+						<input type="submit" value="search" />
+					</form>
+				</div>
+			</td>
+		</tr>
+		</table>			
+		</td>
 	</tr>
 	<tr align="center">
 		<td>
 			<table width="960" height="900" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 			<tr>
-			<td align="center">
-				<br />
-				<div style='font: 20pt Arial bold; font-variant:small-caps; '>
-				<%= @listing[:artist] %> / <%= @listing[:title].downcase %></div>
-				<img src="<%= @listing[:image] %>" />
+			<td align="center" valign="top">
+					<table width="100%" >
+						<tr><td>
+							<a href="/gallery" style="font-weight:bold"> << back to gallery</a>
+						</td></tr>
+						<tr><td align="left" valign="top">
+							<div style='font: 20pt Arial bold; font-variant:small-caps; '>
+							<%= @listing[:artist] %> / <%= @listing[:title].downcase %></div>
+							<img src="<%= @listing[:image] %>" /> <br />
+							<div style='margin:10px'>
+								<b><%= raw(description_forr @listing) %></b>					
+							</div>
+						</td><td align="right" valign="top">
+							<div style="margin-left:33px" >
+							<% @listings.each do | listing | %>
+								<div style="float:left; margin-right:5px" >
+									<a href="/listing/<%= slugify listing[:artist] %>/<%= slugify listing[:title]%>"><img src="<%= listing[:thumb] %>" width="100px" height="100px" /></a>
+								</div>
+							<% end %>
+							</div>
+						</td></tr>
+					</table>
 			</td>
 			</tr>
 
 			<tr>
 			<td align="left">
-				<div style='margin:10px'>
-					<b><%= raw(description_forr @listing) %></b>					
-				</div>
+
 			</td>
 			</tr>
 			</table>

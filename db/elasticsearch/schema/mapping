@@ -9,7 +9,15 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
             "thumb":{
                "index": "not_analyzed",
                "type":  "string"
-            },              
+            },    
+            "thumbh":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },  
+            "constrainedw":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },                                 
             "title_slug":{
                "index": "not_analyzed",
                "type":  "string"
@@ -35,7 +43,11 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
             "artist_slug":{
                "index": "not_analyzed",
                "type":  "string"
-            },            
+            },
+            "artist_description":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },                        
             "artist": {
               "fields":{
                   "__artist":{
@@ -63,7 +75,11 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
                   }
                },
                "type":"multi_field"
-            },            
+            }, 
+            "exhibit_description":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },                       
             "tags": {
               "fields":{
                   "__tags":{
