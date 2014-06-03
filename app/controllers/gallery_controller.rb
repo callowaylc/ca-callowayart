@@ -27,8 +27,8 @@ class GalleryController < ApplicationController
         (request.path =~ /collection/ && @group = 'artist') || @group = 'exhibit'
 
         if @listings.count > 0 
-          @description = @listings[0][:artist_description] if @group == 'artist'
-
+          @description = @listings[0][:artist_description]  if @group == 'artist'
+          @description = @listings[0][:exhibit_description] if @group == 'exhibit'
         end
       end
     end
