@@ -19,6 +19,11 @@ class GalleryController < ApplicationController
     end
       
     @listings = query( params[:group], tags: @tags )
+
+
+    if params[:group] == 'collection' 
+      @listings += query( 'collection_sold', tags: @tags )
+    end
     
     if @listings.count > 0
       @artist   = @listings[0][:artist]

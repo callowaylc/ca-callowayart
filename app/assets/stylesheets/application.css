@@ -97,3 +97,7 @@ div.left-navigation {
 	margin-bottom: 10px;
 
 }
+
+div.not-available {
+  opacity: 0.3;
+}
