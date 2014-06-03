@@ -23,31 +23,41 @@
 					<%= image_tag "call_brand.jpg", :usemap => "#Map2" %>
 					<%= image_tag "call_nav_2.jpg", :usemap => "#Map" %>
 
-					<a href="/gallery/contemporary-art" >
-						<%= image_tag "call_nav_2_cont_off.jpg", class: 'navigation-contemporary' %>
+
+
+					<a href="/gallery/contemporary-art">
+					<% switch = request.path =~ /contemporary-art/ && 'on' || 'off' %>
+					<%= image_tag "call_nav_2_cont_#{switch}.jpg", class: 'navigation-contemporary' %>
 					</a>
+
 
 
 					<a href="/gallery/antique-prints-and-drawings">
-						<%= image_tag "call_nav_2_antprint_off.jpg", class: 'navigation-antique-prints-and-drawings' %>
+						<% switch = request.path =~ /antique-prints/ && 'on' || 'off' %>
+						<%= image_tag "call_nav_2_antprint_#{switch}.jpg", class: 'navigation-antique-prints-and-drawings' %>
 					</a>
 
 					<a href="/gallery/antique-paintings" >
-						<%= image_tag "call_nav_2_antpaint_off.jpg", class: 'navigation-antique-paintings' %>
+						<% switch = request.path =~ /antique-paintings/ && 'on' || 'off' %>
+						<%= image_tag "call_nav_2_antpaint_#{switch}.jpg", class: 'navigation-antique-paintings' %>
 					</a>
 
+				
 					<a href="/gallery/sculpture">
-						<%= image_tag "call_nav_2_sculp_off.jpg", class: 'navigation-sculpture' %>
+						<% switch = request.path =~ /sculpture/ && 'on' || 'off' %>
+						<%= image_tag "call_nav_2_sculp_#{switch}.jpg", class: 'navigation-sculpture' %>
 					</a>
 
 					<a href="/exhibit/current">
-						<%= image_tag "call_nav_2_current_off.jpg", class: 'navigation-current' %>
+						<% switch = request.path =~ /current/ && 'on' || 'off' %>
+						<%= image_tag "call_nav_2_current_#{switch}.jpg", class: 'navigation-current' %>
 					</a>
 
 
 					<a href="/exhibit/past">
-						<%= image_tag "call_nav_2_past_off.jpg", class: 'navigation-past' %>
-					</a>		
+						<% switch = request.path =~ /past/ && 'on' || 'off' %>
+						<%= image_tag "call_nav_2_past_#{switch}.jpg", class: 'navigation-past' %>
+					</a>	
 
 					<%= image_tag "call_nav_2_join.jpg", class: 'navigation-join' %>
 				

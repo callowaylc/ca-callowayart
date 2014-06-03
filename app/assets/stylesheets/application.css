@@ -86,3 +86,14 @@ img.highlighted {
 
 	float:right;
 }
+
+div.left-navigation-highlighted {
+	border-right:3px solid red;
+}
+
+div.left-navigation {
+	border:3px solid white;
+	height:25px;
+	margin-bottom: 10px;
+
+}
