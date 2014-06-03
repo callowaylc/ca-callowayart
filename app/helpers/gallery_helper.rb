@@ -30,10 +30,8 @@ module GalleryHelper
 	end
 
   def description_forr listing
-    description = [ ]
-
-    return listing[:artist] if request.path =~ /gallery/
-    return listing[:description]
+    request.path =~ /gallery/ && listing[:artist] ||
+                                 listing[:description]
   end
 
 end

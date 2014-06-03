@@ -6,7 +6,7 @@
         "must": { "term": {  "__tags" : "<%= tag %>"  }},
       <% end %>
 
-      "must_not": { "term": { "__tags" : "backendonly" }}
+      "should": { "term": { "__tags" : "backendonly" }}
     }},
 
 

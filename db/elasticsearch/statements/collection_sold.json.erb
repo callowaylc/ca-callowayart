@@ -1,0 +1,17 @@
+{
+    "size" : 1000,
+
+    "query": { "bool": {
+      <% tags.each_with_index do | tag, index | %>
+        "must": { "term": {  "__tags" : "<%= tag %>"  }},
+      <% end %>
+
+      "must": { "term": { "__tags" : "backendonly" }}
+
+    }},
+
+    "sort": [
+      { "__title": "asc" }
+    ]
+    
+}

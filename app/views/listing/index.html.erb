@@ -25,6 +25,14 @@
 			<td height="50px">
 				<div class="return-category" >
 						<a href="/gallery/<%= @listing[:artist_slug] %>" ><%= @listing[:artist] %></a> :: <%= @listing[:title].downcase %>
+
+						<% unless @listing[:available] %>
+							<span style="color:red" >
+								<span style="font-variant:normal; font-weight:normal" >//</span>
+								not available
+							</span>
+						<% end %>
+						
 				</div>
 
 				<div class="listing-navigation" >
@@ -47,7 +55,13 @@
 						</td><td align="right" valign="top">
 							<div style="margin-left:13px" >
 							<% @listings.each do | listing | %>
-								<div style="float:left; margin-right:5px" >
+
+								<div 
+									<% unless listing[:available] %>
+										class="not-available"
+									<% end %>
+									style="float:left; margin-right:5px;" 
+								>
 									<a 
 										href="/listing/<%= slugify listing[:artist] %>/<%= slugify listing[:title]%>"
 									>
@@ -55,7 +69,7 @@
 											src="<%= listing[:thumb] %>" 
 											width="100px" 
 											height="100px"
-											class="portfolio-image <% if slugify( listing[:title] ) == @slug %> highlighted <% end %>	
+											class="portfolio-image <% if slugify( listing[:title] ) == @slug %> highlighted <% end %>"
 											
 																					
 										/>
