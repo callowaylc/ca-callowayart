@@ -77,7 +77,13 @@
 							<tr align=left>
 								<td bgcolor='#000000' width='15'>&nbsp;</td><td bgcolor='#000000' width='150'>
 									<div id="mycarousel1" class="carousel-component">
-										<div class="carousel-clip-region" >
+										<div 
+											class="carousel-clip-region 
+												<% unless listing[:available] %>
+													not-available
+												<% end %>
+											" 
+										>
 											<a href="<%= uri_for listing %>" >
 												<img src="<%= listing[:thumb] %>"  />
 											</a>
