@@ -47,7 +47,11 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
             "artist_description":{
                "index": "not_analyzed",
                "type":  "string"
-            },                        
+            },     
+            "artist_last_name":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },                                
             "artist": {
               "fields":{
                   "__artist":{
@@ -58,14 +62,11 @@ curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
                      "search_analyzer":"full_name",
                      "index_analyzer":"partial_name",
                      "type":"string"
-                  }, 
-                  "last_name": {
-                     "index": "not_analyzed",
-                     "type":  "string"
                   }
                },
                "type":"multi_field"
             },
+
             "exhibit": {
               "fields":{
                   "__exhibit":{

@@ -119,14 +119,15 @@ rest = Faraday.new 'http://cms.callowayart.com'
 
 # iterate through records
 count = 0
+limit = 100
 
 loop do
-	puts "processing images #{count * 10} through #{(count * 10) + 10}"
+	puts "processing images #{count * limit} through #{(count * limit) + limit}"
 
 	index  = [ ] 
 	images = JSON.parse(rest.get('/api/image', {
-		offset: ((count += 1) - 1) * 10,
-		limit:  10,
+		offset: ((count += 1) - 1) * limit,
+		limit:  limit,
 		recent: ARGV[0] == 'recent' && 1 || 0
 	}).body)
 
@@ -174,6 +175,9 @@ loop do
 			hash[:tags] << 'unknown'
 			image['artist_slug'] = 'unknown'
 		end
+
+		# add last name if available
+		*ignore, hash[:artist_last_name] = hash[:artist].split( ' ' )
 
 		%w{ 
 			artist_slug title_slug exhibit exhibit_slug exhibit_description

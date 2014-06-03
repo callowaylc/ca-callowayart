@@ -13,7 +13,7 @@
     // provide our group by (aggregations in elastic search)
     "aggregations": {
         "artists": {
-            "terms": { "field":   "__artist", "size": 10000, "order": { "_term" : "asc" }},
+            "terms": { "field": "artist_last_name", "size": 10000, "order": { "_term" : "asc" }},
            
             "aggregations": {
                 "uri": {
@@ -26,6 +26,13 @@
                 "artist": {
                     "terms": { 
                       "field":"__artist", 
+                      "size": 1   
+                    }
+                },
+
+                "artist_last_name": {
+                    "terms": { 
+                      "field":"artist_last_name", 
                       "size": 1   
                     }
                 },

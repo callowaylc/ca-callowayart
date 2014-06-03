@@ -62,7 +62,6 @@ class ApplicationController < ActionController::Base
         end
 
       else
-
         result['aggregations'][name]['buckets'].each do | bucket |
           data << {
             title:  bucket['key'],
