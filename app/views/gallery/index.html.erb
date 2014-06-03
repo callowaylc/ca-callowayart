@@ -99,23 +99,25 @@
 				<td width="245">
 					<table width="100%" cellpadding="15" cellspacing="0" border="0">
 						<tr><td>
-							<div class='side-description-title' >
-							<%= @artist %>
-							</div>
-							<div class='side-description side-description-artist' >
-								<%= @description %>
-							</div>
-							<!--
 							<% if @group %>
-								<div class='group-title'>
-									<%= @listings[0][@group.to_sym] %>
+								<div class='side-description-title' >
+								<%= @artist %>
 								</div>
+								<div class='side-description side-description-artist' >
+									<%= @description %>
+								</div>
+								<!--
+								<% if @group %>
+									<div class='group-title'>
+										<%= @listings[0][@group.to_sym] %>
+									</div>
 
-								<div class='group-description' >
-									<%= @listings[0][(@group + '_description').to_sym] %>
-								</div>
-							<% end %>
+									<div class='group-description' >
+										<%= @listings[0][(@group + '_description').to_sym] %>
+									</div>
+								<% end %>
 							-->
+							<% end %>
 						</td></tr>
 					</table>				
 				</td>

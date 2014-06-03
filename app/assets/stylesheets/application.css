@@ -64,3 +64,25 @@ img.highlighted {
 	font-weight:bold;	
 	font-size: 16px;
 }
+
+.return-category {
+	font-weight:bold;
+	font-size:14px;
+	margin-left: 5px;
+	margin-top:10px;
+	margin-bottom:10px;
+	font-variant: small-caps;
+	float:left;
+}
+
+.listing-navigation {
+	font-weight:bold;
+	font-size:14px;
+	margin-left: 5px;
+	margin-top:10px;
+	margin-bottom:10px;	
+	font-variant: small-caps;
+	margin-right:5px;
+
+	float:right;
+}

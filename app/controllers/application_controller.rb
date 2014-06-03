@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
           }
 
           %w{ 
-            artist_description exhibit exhibit_description 
+            artist_description exhibit exhibit_description artist_slug
 
           }.each do | field |
             record[field.to_sym] = bucket[field] unless bucket[field].nil?
