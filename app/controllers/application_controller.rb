@@ -32,10 +32,8 @@ class ApplicationController < ActionController::Base
       }
       result    = client.search index: 'callowayart', 
                                 body:  statement
-
       # now massage result set into a simpler data structure
       data = [ ]
-
 
       # if aggregations have been returned, we are returning
       # a grouped result set
@@ -48,7 +46,8 @@ class ApplicationController < ActionController::Base
             image: bucket['constrainedw'],
             thumb: bucket['thumb'],
             artist: bucket['artist'],
-            thumbh: bucket['thumbh']
+            thumbh: bucket['thumbh'],
+            available: bucket['tags'].include?( 'backendonly' )
           }
 
           %w{ 
