@@ -8,7 +8,7 @@ CaCallowayart::Application.routes.draw do
   }
 
   get "exhibit/current", to: 'gallery#index', defaults: {
-    tags: '/relativity-colin-taylor-and-daniel-calder', group: 'collection'
+    tags: '/linda-press-barbara-sussberg', group: 'collection'
   }
   get "search", to: 'gallery#index'
 
