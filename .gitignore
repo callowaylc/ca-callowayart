@@ -16,5 +16,8 @@
 /log/*.log
 /tmp
 .environment
-
+/releases
+/repo
+*.log
+*.out
 db/dump/*
