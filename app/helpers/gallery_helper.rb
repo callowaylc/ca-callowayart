@@ -31,7 +31,7 @@ module GalleryHelper
 
   def description_forr listing
     request.path =~ /gallery/ && listing[:artist] ||
-                                 listing[:description]
+                                 listing[:description].gsub( /\n/, '<br />' )
   end
 
 end
