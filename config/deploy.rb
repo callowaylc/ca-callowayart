@@ -65,8 +65,8 @@ namespace :deploy do
       execute 'cd /var/www/callowayart'
       execute 'rm ./tmp'
       execute 'ln -s ~/Develop/ca-callowayart/tmp'
-      execute 'rm -rf tmp/pids/*'
-      execute 'rails s &'
+      #execute 'rm -rf tmp/pids/*'
+      #execute 'rails s &'
     end
   end
 

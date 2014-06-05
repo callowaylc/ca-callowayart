@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
             thumb: bucket['thumb'],
             artist: bucket['artist'],
             thumbh: bucket['thumbh'],
-            available: !bucket['tags'].include?( 'backendonly' )
+            available: !bucket['tags'].include?( 'not-available' )
           }
 
           %w{ 

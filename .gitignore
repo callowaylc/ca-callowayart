@@ -11,9 +11,13 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
+/current
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
 .environment
-
+/releases
+/repo
+*.log
+*.out
 db/dump/*
