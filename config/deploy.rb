@@ -62,9 +62,6 @@ namespace :deploy do
 
       # restart unicorn server
       # desc 'kicking varnish tires'
-      execute 'cd /var/www/callowayart'
-      execute 'rm ./tmp'
-      execute 'ln -s ~/Develop/ca-callowayart/tmp'
       #execute 'rm -rf tmp/pids/*'
       #execute 'rails s &'
     end
@@ -96,11 +93,15 @@ namespace :deploy do
   after :publishing, :restart
 
   after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
+    #on roles(:web), in: :groups, limit: 3, wait: 10 do
+    on roles(:web), in: :sequence, wait: 5 do
       # Here we can do anything such as:
       # within release_path do
       #   execute :rake, 'cache:clear'
       # end
+      execute 'cd /var/www/callowayart'
+      execute 'rm ./tmp'
+      execute 'ln -s ~/Develop/ca-callowayart/tmp'
     end
   end
 
