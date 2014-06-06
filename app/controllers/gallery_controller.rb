@@ -20,17 +20,13 @@ class GalleryController < ApplicationController
       
     @listings = query( params[:group], tags: @tags )
 
-
-    if params[:group] == 'collection' 
-      @listings += query( 'collection_sold', tags: @tags )
-    end
-    
     if @listings.count > 0
 
       if params[:group] == 'collection'
         (request.path =~ /collection/ && @group = 'artist') || @group = 'exhibit'
-	@title = @listings[0][:artist] if @group == 'artist'
-	@title = @listings[0][:exhibit] if @group == 'exhibit'
+        
+        @title = @listings[0][:artist] if @group == 'artist'
+        @title = @listings[0][:exhibit] if @group == 'exhibit'
 
         if @listings.count > 0 
           @description = @listings[0][:artist_description]  if @group == 'artist'
