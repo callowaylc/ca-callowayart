@@ -3,17 +3,15 @@ class Statement
   class << self
 
     # execute statements/name 
-    def query(name, opts={ })
+    def query(name, params={ })
       name = name.to_s
 
       # create es client
       client = Elasticsearch::Client.new
-      erb    = ERB.new(
-        content = File.read(
-          "#{ENV['RAILS_ROOT']}/db/elasticsearch/statements/" +
-          "#{name}.json.erb"
-        )
-      )
+      erb    = ERB.new(content = File.read(
+        "#{ENV['RAILS_ROOT']}/db/elasticsearch/statements/" +
+        "#{name}.json.erb"
+      ))
 
       # parse and return valid statement and pass to 
       # elasticsearch client
@@ -68,7 +66,7 @@ class Statement
     end
 
     def method_missing(name, *arguments)
-      query name, arguments.pup
+      query name, arguments.pop
     end
 
   end

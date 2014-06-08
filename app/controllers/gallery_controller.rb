@@ -18,7 +18,7 @@ class GalleryController < ApplicationController
       @tags          = [ params[:q] ]
     end
       
-    @listings = query( params[:group], tags: @tags )
+    @listings = Statement.query( params[:group], tags: @tags )
 
     if @listings.count > 0
 
