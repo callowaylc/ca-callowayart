@@ -37,6 +37,9 @@ class GalleryController < ApplicationController
 
   end
 
+  def design
+  end
+
   protected
 
     def tags

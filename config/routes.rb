@@ -1,5 +1,8 @@
 CaCallowayart::Application.routes.draw do
   get "auth/constantcontact"
+  get "gallery/design", to: 'gallery#design'
+  get "gallery/custom-framing-and-mirror-design", to: 'gallery#design'
+
   get "gallery*tags", to: 'gallery#index', defaults: {
     page: 1, group: 'artists'
   }
@@ -25,7 +28,7 @@ CaCallowayart::Application.routes.draw do
   }
 
   get  "about",   to: 'home#about'
-  get  "contact", to: 'home#contact' 
+  get  "contact", to: 'home#contact'
   post "join",    to: 'home#join'
 
   # The priority is based upon order of creation: first created -> highest priority.
