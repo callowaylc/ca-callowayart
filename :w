@@ -1,0 +1,4 @@
+#!/bin/bash
+# post-commit: performs cap deployment to production
+
+cap production deploy

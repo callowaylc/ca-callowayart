@@ -1,4 +1,6 @@
 CaCallowayart::Application.routes.draw do
+  get "exhibit/past"
+  get "exhibit/upcoming"
   get "auth/constantcontact"
 
   # TODO: do aliases here instead of defining separate routes

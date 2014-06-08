@@ -1,4 +1,10 @@
 class ExhibitController < ApplicationController
-  def index
+  def past
+  end
+
+  def current
+  end
+
+  def upcoming
   end
 end
