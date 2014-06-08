@@ -94,14 +94,19 @@ namespace :deploy do
 
   after :restart, :clear_cache do
     #on roles(:web), in: :groups, limit: 3, wait: 10 do
-    on roles(:web), in: :sequence, wait: 5 do
+    on roles(:web), in: :sequence, wait: 10 do
       # Here we can do anything such as:
       # within release_path do
       #   execute :rake, 'cache:clear'
       # end
-      execute 'cd /var/www/callowayart'
-      execute 'rm ./tmp'
-      execute 'ln -s ~/Develop/ca-callowayart/tmp'
+      root  = '/var/www/callowayart'
+      execute "ln -s ~/Develop/ca-callowayart/tmp #{root}/tmp"
+
+      begin
+        execute "kill -s USR2 `cat #{root}/tmp/pids/unicorn.pid`"
+      rescue 
+        execute "cd #{root} && nohup rails s &"
+      end
     end
   end
 
