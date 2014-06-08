@@ -1,5 +1,7 @@
 CaCallowayart::Application.routes.draw do
   get "auth/constantcontact"
+
+  # TODO: do aliases here instead of defining separate routes
   get "gallery/design", to: 'gallery#design'
   get "gallery/custom-framing-and-mirror-design", to: 'gallery#design'
 
