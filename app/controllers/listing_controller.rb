@@ -12,7 +12,6 @@ class ListingController < ApplicationController
 
     # get associated art from the artist
     @listings  = query :collection, tags: [ params[:artist] ]
-    @listings += query :collection_sold, tags: [ params[:artist] ]
 
     @slug     = params[:slug]
     @artist   = params[:artist]
