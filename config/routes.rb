@@ -1,6 +1,4 @@
 CaCallowayart::Application.routes.draw do
-  get "exhibit/past"
-  get "exhibit/upcoming"
   get "auth/constantcontact"
 
   # TODO: do aliases here instead of defining separate routes
@@ -14,18 +12,21 @@ CaCallowayart::Application.routes.draw do
     group: 'artists'
   }
 
-  get "exhibit/current", to: 'gallery#index', defaults: {
-    tags: '/linda-press-barbara-sussberg', group: 'collection'
-  }
+  # exhibit related routes #######################################
+
+  get "exhibit/past",       to: 'exhibit#past'
+  get "exhibit/current",    to: 'exhibit#current'
+  get "exhibit/(:exhibit)", to: 'exhibit#exhibit'
+
+  # search and facet related routes ##############################
+
   get "search", to: 'gallery#index'
 
   get "collection*tags", to: 'gallery#index', defaults: {
     group: 'collection'
   }
 
-  get "exhibit/past/(:exhibit)", to: 'gallery#index', defaults: {
-    tags: '/exhibit', group: 'exhibits'
-  }
+
 
   get "listing/:artist/:slug", to: 'listing#index', defaults: {
     group: 'collection'

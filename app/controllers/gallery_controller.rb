@@ -1,5 +1,5 @@
 class GalleryController < ApplicationController
-  LIMIT = 30
+  layout 'gallery'
 
   def index
     params[:group] = 'collection' if params[:exhibit].present?
@@ -35,6 +35,7 @@ class GalleryController < ApplicationController
       end
     end
 
+    render
   end
 
   def design
