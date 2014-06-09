@@ -9,23 +9,16 @@ class ExhibitController < ApplicationController
   end
 
   def current
-    # grab current exhibit listing and all exhibits
-    # and proceed to iterate through group to find exhibit
-    # name
+    # grab current exhibit listing to get current exhibity
+    # slug and 
     current = ( Statement.exhibit tags: [ 'current' ] ).pop
 
-    # grab all exhibits names
-
-
+    # grab all images associatdd 
     @listings = Statement.exhibit tags: [slugify(
       current[:exhibit]
     )]
-
-    raise @listings.to_s
-
-
-
-
+    @name        = @listings[0][:exhibit]
+    @description = @listings[0][:exhibit_description] 
   end
 
   def upcoming

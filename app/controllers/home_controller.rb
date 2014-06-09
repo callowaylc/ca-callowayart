@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   def index
     cache_for 60
 
-    @listings = query :home
+    @listings = Statement.home
   end
 
   def join
@@ -28,6 +28,9 @@ class HomeController < ApplicationController
     end
 
     redirect_to request.referer
+  end
+
+  def design
   end
 
 end

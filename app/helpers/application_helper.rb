@@ -1,6 +1,7 @@
 module ApplicationHelper
   def slugify(string)
-    string.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') if string
+    slug = string.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') if string
+    slug.gsub( /\-{2,}/, '-' )
   end
 
 
@@ -23,5 +24,5 @@ module ApplicationHelper
     tags
   end
 
-  
+
 end

@@ -1,10 +1,6 @@
 CaCallowayart::Application.routes.draw do
   get "auth/constantcontact"
 
-  # TODO: do aliases here instead of defining separate routes
-  get "gallery/design", to: 'gallery#design'
-  get "gallery/custom-framing-and-mirror-design", to: 'gallery#design'
-
   get "gallery*tags", to: 'gallery#index', defaults: {
     page: 1, group: 'artists'
   }
@@ -24,19 +20,19 @@ CaCallowayart::Application.routes.draw do
 
   # artist portfolio/collection routes ###########################
 
-  get "collection*tags", to: 'gallery#index', defaults: {
-    group: 'collection'
-  }
+  get "collection*tags",       to: 'collection#index'
+  get "listing/:artist/:slug", to: 'listing#index'
 
 
-
-  get "listing/:artist/:slug", to: 'listing#index', defaults: {
-    group: 'collection'
-  }
+  # home about and static page routes ############################
 
   get  "about",   to: 'home#about'
   get  "contact", to: 'home#contact'
+  get  "design",  to: 'home#design'
+
   post "join",    to: 'home#join'
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
