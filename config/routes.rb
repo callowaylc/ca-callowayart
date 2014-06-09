@@ -12,7 +12,9 @@ CaCallowayart::Application.routes.draw do
 
   get "exhibit/past",       to: 'exhibit#past'
   get "exhibit/current",    to: 'exhibit#current'
+  get "exhibit/upcoming",   to: 'exhibit#upcoming'
   get "exhibit/(:exhibit)", to: 'exhibit#exhibit'
+
 
   # search and facet related routes ##############################
 

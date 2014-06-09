@@ -22,5 +22,8 @@ class ExhibitController < ApplicationController
   end
 
   def upcoming
+    # retrieve upcoming exhibits
+    @listings = Statement.exhibits tags:[ 'upcoming' ] 
+
   end
 end
