@@ -20,6 +20,7 @@ class Statement
       }
       result    = client.search index: 'callowayart', 
                                 body:  statement
+
       # now massage result set into a simpler data structure
       data = [ ]
 
@@ -49,7 +50,7 @@ class Statement
         end
 
       else
-        result['aggregations'][name]['buckets'].each do | bucket |
+        result['aggregations'].first.pop['buckets'].each do | bucket |
           data << {
             title:  bucket['key'],
             count:  bucket['doc_count'],

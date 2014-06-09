@@ -4,7 +4,7 @@
     "query": { "bool": {
       <% tags.each_with_index do | tag, index | %>
         "must": { "term": {  "__tags" : "<%= tag %>"  }},
-      <% end %>
+      <% end unless tags.nil? %>
 
       "must_not": { "term": { "__tags" : "backendonly" }}
     }},
