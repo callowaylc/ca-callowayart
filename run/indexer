@@ -154,8 +154,7 @@ loop do
 		rescue Exception => ignore
 			next
 		end
-		puts image.to_s
-		exit
+
 		index << hash = {
 			id:           image['id'],
 			title:        image['title'],
