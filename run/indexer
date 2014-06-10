@@ -183,7 +183,28 @@ loop do
 			artist_slug title_slug exhibit exhibit_slug exhibit_description
 
 		}.each do | field |
-			hash[field] = image[field] if image[field]
+			hash[field.to_sym] = image[field] if image[field]
+		end
+
+		# if exhibit description exists, check for meta tags and
+		# remove and store if the case
+		unless hash[:exhibit_description].nil?
+
+			hash[:exhibit_description].gsub!( /^@.+?$/ ) do | match |
+
+				# get name and value from meta tag
+				name, value = match[1..-1].split( '=' )
+
+				# make sure values are properly stripped
+				hash[name.strip.to_sym] = value.strip
+
+				# ultimately we are replacing the line, so we return an 
+				# empty string
+				# TODO: this may cause additional line breaks, so may need
+				# to remove as well
+				''
+			end
+
 		end
 
 	end
