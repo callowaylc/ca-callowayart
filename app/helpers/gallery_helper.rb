@@ -10,13 +10,15 @@ module GalleryHelper
 
         # depending on resource path, return either 
         # artist slug or exhibit slug
-        slug = if request.path =~ /exhibit/
-          listing[:artist_slug]
-        else
+        if request.path =~ /exhibit/
+          request.path.sub( /\/(past|current|upcoming)/, '' ) + '/' + 
           listing[:exhibit_slug]
+        else
+          request.path.sub( 'gallery', 'collection' ) + '/' + 
+          listing[:artist_slug]
         end
 
-        request.path.sub( 'gallery', 'collection' ) + '/' + slug
+        
 
 
       else

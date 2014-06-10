@@ -19,13 +19,7 @@ class ExhibitController < ApplicationController
     # slug and 
     current = ( Statement.exhibit tags: [ 'current' ] ).pop
 
-    # grab all images associatdd 
-    @listings = Statement.exhibit tags: [slugify(
-      current[:exhibit]
-    )]
-
-    @name        = @listings[0][:exhibit]
-    @description = @listings[0][:exhibit_description] 
+    load current[:exhibit_slug]
   end
 
   def upcoming
@@ -33,4 +27,17 @@ class ExhibitController < ApplicationController
     @listings = Statement.exhibits tags:[ 'upcoming' ] 
 
   end
+
+  def show
+    load params[:exhibit]
+  end
+
+  private
+
+    def load(tag) 
+      # grab all images associatdd 
+      @listings = Statement.exhibit tags: [ tag ]
+      @name        = @listings[0][:exhibit]
+      @description = @listings[0][:exhibit_description] 
+    end
 end
