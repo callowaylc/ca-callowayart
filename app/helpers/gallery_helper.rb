@@ -8,15 +8,16 @@ module GalleryHelper
     begin 
       unless listing[:count].nil?
 
-        if request.path =~ /exhibit/
-          request.path + '/' + slugify( listing[:title] )
-
+        # depending on resource path, return either 
+        # artist slug or exhibit slug
+        slug = if request.path =~ /exhibit/
+          listing[:artist_slug]
         else
-  		    request.path.gsub( 'gallery', 'collection' ) + 
-          '/' + 
-          slugify( listing[:artist] )
-
+          listing[:exhibit_slug]
         end
+
+        request.path.sub( 'gallery', 'collection' ) + '/' + slug
+
 
       else
         '/listing'                + '/' + 

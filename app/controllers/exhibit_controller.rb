@@ -4,8 +4,16 @@ class ExhibitController < ApplicationController
 
   def past
     # grab past exhibit listings
-    @listings = Statement.past_exhibits tags: tags 
+    @listings = Statement.past_exhibits
 
+    # sort listings 
+    # TODO: this should be done in elasticsearch statement
+    # ie must learn more
+    # NOTE: Nil#to_i evaluates to 0
+    @listings.sort! { | a, b | b[:exhibit_start].to_i <=> a[:exhibit_start].to_i }
+
+    raise @listings[0].to_s
+  
   end
 
   def current
@@ -17,6 +25,7 @@ class ExhibitController < ApplicationController
     @listings = Statement.exhibit tags: [slugify(
       current[:exhibit]
     )]
+
     @name        = @listings[0][:exhibit]
     @description = @listings[0][:exhibit_description] 
   end

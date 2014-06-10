@@ -2,11 +2,11 @@
     "size" : 0,
 
     "query": { "bool": {
-      <% tags.each_with_index do | tag, index | %>
+      <% tags && tags.each_with_index do | tag, index | %>
         "must": { "term": {  "__tags" : "<%= tag %>"  }},
       <% end %>
 
-      "must": { "term": {  "__tags" : "exhibit"  }},
+      "should": { "term": {  "__tags" : "exhibit"  }},
       "must_not": { "term": { "__tags" : "backendonly" }},
       "must_not": { "term": { "__tags" : "current" }}
     }},
@@ -25,14 +25,37 @@
                       "size": 1   
                     }
                 },
-
+                "exhibit_slug": {
+                    "terms": { 
+                      "field":"exhibit_slug", 
+                      "size": 1   
+                    }
+                },
                 "artist": {
                     "terms": { 
                       "field":"__artist", 
                       "size": 1   
                     }
                 },
+                "artist_slug": {
+                    "terms": { 
+                      "field":"artist_slug", 
+                      "size": 1   
+                    }
+                },                
+                "exhibit_start": {
+                    "terms": { 
+                      "field":"exhibit_start", 
+                      "size": 1   
+                    }
+                },  
 
+                "exhibit_description": {
+                    "terms": { 
+                      "field":"exhibit_description", 
+                      "size": 1   
+                    }
+                },                                 
                 "thumb": {
                     "terms": { 
                       "field":"thumb", 
