@@ -11,8 +11,6 @@ class ExhibitController < ApplicationController
     # ie must learn more
     # NOTE: Nil#to_i evaluates to 0
     @listings.sort! { | a, b | b[:exhibit_start].to_i <=> a[:exhibit_start].to_i }
-
-    raise @listings[0].to_s
   
   end
 
