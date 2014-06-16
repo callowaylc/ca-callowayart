@@ -2,44 +2,50 @@ class GalleryController < ApplicationController
   layout 'gallery'
 
   def index
-    params[:group] = 'collection' if params[:exhibit].present?
+    # retrieve upcoming exhibits
+    @listings = sort Statement.groups_gallery( tags: tags )
 
-    # assign view params
-  	@page  = params[:page]
-    @tags  = [ ]
-
-    if tags.count > 0
-      @tags = tags 
+    # retrieve artist and description if there are less than
+    if artist_collection?( @listings )
+      @artist      = @listings[0][:artist]
+      @description = @listings[0][:artist_description] 
     end
 
+    # if listings falls underneath threshold of 5 items
+    # TODO: there is a better way to do this that is eluding
+    # me at the moment
+    if @listings.length < 5
 
-    if request.path =~ /^\/search/ && params[:q].present?
-      params[:group] = 'search'
-      @tags          = [ params[:q] ]
-    end
-      
-    @listings = Statement.query( params[:group], tags: @tags )
-
-    if @listings.count > 0
-
-      if params[:group] == 'collection'
-        (request.path =~ /collection/ && @group = 'artist') || @group = 'exhibit'
-        
-        @title = @listings[0][:artist] if @group == 'artist'
-        @title = @listings[0][:exhibit] if @group == 'exhibit'
-
-        if @listings.count > 0 
-          @description = @listings[0][:artist_description]  if @group == 'artist'
-          @description = @listings[0][:exhibit_description] if @group == 'exhibit'
+      unless artist_collection?( @listings )
+        @facets = @listings.map do | listing |
+          {
+            slug:  listing[:slug],
+            title: listing[:title].gsub('-', ' '),
+            thumb: listing[:thumb]
+          }
         end
       end
+      @listings = Statement.collection tags: tags
+  
     end
-
-    render
   end
 
   def design
   end
 
+  private 
+
+    def sort(listings)
+      listings.sort_by do | listing |
+        listing[:title].split( '-' )[-1]
+      end
+    end
+
+    def artist_collection?(listings)
+      @is_a_collection ||= begin
+        uniques = listings.uniq { | record | record[:artist] }
+        uniques.length == 1
+      end
+    end
 
 end

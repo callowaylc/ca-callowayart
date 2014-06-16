@@ -31,6 +31,7 @@ class Statement
           bucket = hash['_source']
           record = {
             title: bucket['title'],
+            slug:  bucket['title_slug'],
             description: bucket['description'],
             image: bucket['constrainedw'],
             thumb: bucket['thumb'],
@@ -49,36 +50,44 @@ class Statement
           data << record
         end
 
-      else
+      else        
         result['aggregations'].first.pop['buckets'].each do | bucket |
-          record = {
-            title:  bucket['key'],
-            count:  bucket['doc_count'],
-            image:  bucket['uri']['buckets'][0]['key'],
-            thumb:  bucket['thumb']['buckets'][0]['key'],
-            artist: bucket['artist']['buckets'][0]['key'],
-            description: bucket['key'],
-            available: true
-          }
 
-          # do something with record here
-          %w{ 
-            artist_description 
-            exhibit 
-            exhibit_description 
-            artist_slug 
-            exhibit_slug
-            exhibit_start
+          # we don't want collections larger than 150, we check
+          # doc_count and exclude when over max count 
+          # TODO: this should be moved to elasticsearch statement 
+          # but there is currently not a max_doc_count field
+          if bucket['doc_count'] < 150
+            record = { 
+              title: bucket['key'],
+              slug:  bucket['key'],
+              count: bucket['doc_count'],
+              available: true
+            }
 
-          }.each do | field |
-            if bucket[field] && !bucket[field]['buckets'].empty? 
-              record[field.to_sym] = bucket[field]['buckets'][0]['key']
-            end
-          end          
+            # iterate through bucket fields - the result set will
+            # be the arbiter of what fields are available
+            bucket.keys.each do | key |
+              if ( value = bucket[key] ).kind_of?( Hash )
+                # remove all empty value fields 
+                buckets = value['buckets'].reject { | bucket | bucket['key'].empty? }
 
-          # add record to queue
-          data << record
+                # now assign sample from buckets with non-null values
+                record[key.to_sym] = buckets.sample['key'] unless buckets.empty?
 
+                # also get reference to collection
+                record["#{key}_collection"] = buckets.map { | bucket | bucket['key'] }
+
+              else
+                record[key.to_sym] = value
+              end
+
+
+            end         
+
+            # add record to queue
+            data << record
+          end
         end
       end
 
@@ -88,6 +97,12 @@ class Statement
     def method_missing(name, *arguments)
       query name, arguments.pop
     end
+
+    private 
+      def tags( aggregate )
+        raise aggregate.to_s  
+      end
+
 
   end
 

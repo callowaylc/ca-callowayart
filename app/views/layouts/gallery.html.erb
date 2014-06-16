@@ -93,7 +93,8 @@
 
                 <td width='190' class='description'>
                   <a href="<%= uri_for listing %>" >
-                    <b><%= raw(description_forr listing) %></b>
+                    <b><%= listing[:title] %></b><br />
+                    <%= raw(description_for( listing )) %>
                   </a>
                   <br /><br />
 

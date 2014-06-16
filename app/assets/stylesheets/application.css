@@ -101,3 +101,9 @@ div.left-navigation {
 div.not-available {
   opacity: 0.2;
 }
+
+div.side-facet {
+	margin-left:25px;
+	margin-bottom: 10px;
+}
+
