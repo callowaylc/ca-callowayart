@@ -70,14 +70,20 @@ class Statement
             bucket.keys.each do | key |
               if ( value = bucket[key] ).kind_of?( Hash )
                 # remove all empty value fields 
-                buckets = value['buckets'].reject { | bucket | bucket['key'].empty? }
+                buckets = value['buckets'].reject do | bucket | 
+                  bucket['key'].nil? || 
+                  bucket['key'].kind_of?( String) && bucket['key'].empty?
+                end
 
                 # now assign sample from buckets with non-null values
                 record[key.to_sym] = buckets.sample['key'] unless buckets.empty?
 
                 # also get reference to collection
-                record["#{key}_collection"] = buckets.map { | bucket | bucket['key'] }
+                if buckets.count > 1
+                  record["#{key}_collection"] = buckets.map { | bucket | bucket['key'] }
+                end
 
+    
               else
                 record[key.to_sym] = value
               end
