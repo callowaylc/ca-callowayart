@@ -5,29 +5,27 @@ class GalleryController < ApplicationController
     # retrieve upcoming exhibits
     @listings = sort Statement.groups_gallery( tags: tags )
 
+    # if listings falls between 0 and MAX number
+    if @listings.count.between?( 0, 5 )
+      @facets = @listings.map do | listing |
+        {
+          slug:  listing[:slug],
+          title: listing[:title].gsub('-', ' '),
+          thumb: listing[:thumb],
+          count: listing[:doc_count]
+        }
+      end
+
+      @listings = Statement.collection( tags: tags )
+    end
+
     # retrieve artist and description if there are less than
     if artist_collection?( @listings )
       @artist      = @listings[0][:artist]
       @description = @listings[0][:artist_description] 
     end
 
-    # if listings falls underneath threshold of 5 items
-    # TODO: there is a better way to do this that is eluding
-    # me at the moment
-    if @listings.length < 5
 
-      unless artist_collection?( @listings )
-        @facets = @listings.map do | listing |
-          {
-            slug:  listing[:slug],
-            title: listing[:title].gsub('-', ' '),
-            thumb: listing[:thumb]
-          }
-        end
-      end
-      @listings = Statement.collection tags: tags
-  
-    end
   end
 
   def design

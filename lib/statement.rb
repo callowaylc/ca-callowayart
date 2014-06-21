@@ -11,7 +11,7 @@ class Statement
       erb    = ERB.new(content = File.read(
         "#{ENV['RAILS_ROOT']}/db/elasticsearch/statements/" +
         "#{name}.json.erb"
-      ))
+      ))      
 
       # parse and return valid statement and pass to 
       # elasticsearch client
@@ -28,30 +28,27 @@ class Statement
       # a grouped result set
       if result['aggregations'].nil?
         result['hits']['hits'].each do | hash |
-          bucket = hash['_source']
-          record = {
-            title: bucket['title'],
-            slug:  bucket['title_slug'],
-            description: bucket['description'],
-            image: bucket['constrainedw'],
-            thumb: bucket['thumb'],
-            artist: bucket['artist'],
-            thumbh: bucket['thumbh'],
-            available: !bucket['tags'].include?( 'not-available' )
-          }
+          # assign 
+          record = hash['_source']
+          record.merge!({
+            slug:  record['title_slug'],
+            image: record['constrainedw'],
+            available: !record['tags'].include?( 'not-available' )
+          })
 
-          %w{ 
-            artist_description exhibit exhibit_description artist_slug exhibit_slug
-
-          }.each do | field |
-            record[field.to_sym] = bucket[field] unless bucket[field].nil?
-          end
-
-          data << record
+          data << record.with_indifferent_access
         end
 
-      else        
+      else                
         result['aggregations'].first.pop['buckets'].each do | bucket |
+
+          aggregate_value = lambda do | key |
+            begin
+              bucket[key]['buckets'].sample['key']
+            rescue
+              nil
+            end
+          end
 
           # we don't want collections larger than 150, we check
           # doc_count and exclude when over max count 
@@ -92,7 +89,7 @@ class Statement
             end         
 
             # add record to queue
-            data << record
+            data << record.with_indifferent_access
           end
         end
       end
@@ -108,6 +105,8 @@ class Statement
       def tags( aggregate )
         raise aggregate.to_s  
       end
+
+
 
 
   end

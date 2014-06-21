@@ -6,14 +6,18 @@ module ApplicationHelper
     end
   end
 
+  def deslugify(string)
+    string.gsub('-', ' ') unless string.nil?
+  end
+
   def uri_for(listing)
 
     # if listing contains an id, then we build a uri for a individual 
     # listing
     unless listing[:id].nil?
       uri  = "/listing"
-      uri += "/#{listing[:artist]}" unless listing[:artist]
-      uri += "/#{listing[:title]}"
+      uri += "/#{listing[:artist_slug]}" if listing[:artist_slug]
+      uri += "/#{listing[:slug]}"
     else
       request.path + '/' + listing[:slug]      
     end

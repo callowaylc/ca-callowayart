@@ -103,7 +103,19 @@ div.not-available {
 }
 
 div.side-facet {
+	margin-bottom: 20px;
+}
+
+.side-facets-intro {
+	margin-bottom: 20px;
+	font-size:12px;
+}
+
+div.side-facets {
 	margin-left:25px;
-	margin-bottom: 10px;
+	font-weight:bold;
+	margin-left:25px;
+	font-variant: small-caps;
+
 }
 
