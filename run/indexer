@@ -160,31 +160,32 @@ loop do
 			title:        image['title'],
 			title_slug:   image['title'].slugify,
 			description:  image['description'] || "description",
-			artist:       image['artist'] || "unknown",
+			artist:       image['artist'],
 			uri:          image['full'],
 			thumb:        thumb,
 			thumbh:       thumbh,
 			constrainedw: constrainedw, 
 			tags:         image['tags'] || [ ],
 			type:         'art',
-			artist_description: image['artist_description'] || "artist-description"
+			artist_description: image['artist_description']
 		}
 
-		# add unknown to tags if no artist has been specified
-		unless image['artist']
-			hash[:tags] << 'unknown'
-			image['artist_slug'] = 'unknown'
-		end
-
-		# add last name if available
-		*ignore, hash[:artist_last_name] = hash[:artist].split( ' ' )
 
 		%w{ 
-			artist_slug title_slug exhibit exhibit_slug exhibit_description
+			artist_slug 
+			title_slug 
+			exhibit 
+			exhibit_slug 
+			exhibit_description
+			artist
+			artist_description
 
 		}.each do | field |
 			hash[field.to_sym] = image[field] if image[field]
 		end
+
+		# add last name if available
+		*ignore, hash[:artist_last_name] = hash[:artist].split( ' ' ) if hash[:artist]		
 
 		# if exhibit description exists, check for meta tags and
 		# remove and store if the case

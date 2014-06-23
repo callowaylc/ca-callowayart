@@ -11,7 +11,7 @@ class Statement
       erb    = ERB.new(content = File.read(
         "#{ENV['RAILS_ROOT']}/db/elasticsearch/statements/" +
         "#{name}.json.erb"
-      ))
+      ))      
 
       # parse and return valid statement and pass to 
       # elasticsearch client
@@ -28,57 +28,69 @@ class Statement
       # a grouped result set
       if result['aggregations'].nil?
         result['hits']['hits'].each do | hash |
-          bucket = hash['_source']
-          record = {
-            title: bucket['title'],
-            description: bucket['description'],
-            image: bucket['constrainedw'],
-            thumb: bucket['thumb'],
-            artist: bucket['artist'],
-            thumbh: bucket['thumbh'],
-            available: !bucket['tags'].include?( 'not-available' )
-          }
+          # assign 
+          record = hash['_source']
+          record.merge!({
+            slug:  record['title_slug'],
+            image: record['constrainedw'],
+            available: !record['tags'].include?( 'not-available' )
+          })
 
-          %w{ 
-            artist_description exhibit exhibit_description artist_slug exhibit_slug
-
-          }.each do | field |
-            record[field.to_sym] = bucket[field] unless bucket[field].nil?
-          end
-
-          data << record
+          data << record.with_indifferent_access
         end
 
-      else
+      else                
         result['aggregations'].first.pop['buckets'].each do | bucket |
-          record = {
-            title:  bucket['key'],
-            count:  bucket['doc_count'],
-            image:  bucket['uri']['buckets'][0]['key'],
-            thumb:  bucket['thumb']['buckets'][0]['key'],
-            artist: bucket['artist']['buckets'][0]['key'],
-            description: bucket['key'],
-            available: true
-          }
 
-          # do something with record here
-          %w{ 
-            artist_description 
-            exhibit 
-            exhibit_description 
-            artist_slug 
-            exhibit_slug
-            exhibit_start
-
-          }.each do | field |
-            if bucket[field] && !bucket[field]['buckets'].empty? 
-              record[field.to_sym] = bucket[field]['buckets'][0]['key']
+          aggregate_value = lambda do | key |
+            begin
+              bucket[key]['buckets'].sample['key']
+            rescue
+              nil
             end
-          end          
+          end
 
-          # add record to queue
-          data << record
+          # we don't want collections larger than 150, we check
+          # doc_count and exclude when over max count 
+          # TODO: this should be moved to elasticsearch statement 
+          # but there is currently not a max_doc_count field
+          if bucket['doc_count'] < 150
+            record = { 
+              title: bucket['key'],
+              slug:  bucket['key'],
+              count: bucket['doc_count'],
+              available: true
+            }
 
+            # iterate through bucket fields - the result set will
+            # be the arbiter of what fields are available
+            bucket.keys.each do | key |
+              if ( value = bucket[key] ).kind_of?( Hash )
+                # remove all empty value fields 
+                buckets = value['buckets'].reject do | bucket | 
+                  bucket['key'].nil? || 
+                  bucket['key'].kind_of?( String) && bucket['key'].empty?
+                end
+
+                # now assign sample from buckets with non-null values
+                record[key.to_sym] = buckets.sample['key'] unless buckets.empty?
+
+                # also get reference to collection
+                if buckets.count > 1
+                  record["#{key}_collection"] = buckets.map { | bucket | bucket['key'] }
+                end
+
+    
+              else
+                record[key.to_sym] = value
+              end
+
+
+            end         
+
+            # add record to queue
+            data << record.with_indifferent_access
+          end
         end
       end
 
@@ -88,6 +100,14 @@ class Statement
     def method_missing(name, *arguments)
       query name, arguments.pop
     end
+
+    private 
+      def tags( aggregate )
+        raise aggregate.to_s  
+      end
+
+
+
 
   end
 

@@ -1,9 +1,31 @@
 module ApplicationHelper
   def slugify(string)
-    slug = string.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') if string
-    slug.gsub( /\-{2,}/, '-' )
+    unless string.nil?
+      slug = string.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') if string
+      slug.gsub( /\-{2,}/, '-' )
+    end
   end
 
+  def deslugify(string)
+    string.gsub('-', ' ') unless string.nil?
+  end
+
+  def uri_for(listing)
+
+    # if listing contains an id, then we build a uri for a individual 
+    # listing
+    if listing[:id]
+      uri  = "/listing"
+      uri += "/#{listing[:artist_slug]}" if listing[:artist_slug]
+      uri += "/#{listing[:slug]}"
+
+    elsif request.path =~ /exhibit/
+      "/exhibit/#{listing[:slug]}"
+
+    else
+      request.path + '/' + listing[:slug]      
+    end
+  end
 
   def tags
     # basically moving the chaos that is the current route
