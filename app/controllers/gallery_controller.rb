@@ -1,5 +1,6 @@
 class GalleryController < ApplicationController
   layout 'gallery'
+  include ApplicationHelper
 
   def index
     # retrieve upcoming exhibits

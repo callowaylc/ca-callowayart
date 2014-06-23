@@ -22,9 +22,11 @@ CaCallowayart::Application.routes.draw do
 
   # artist portfolio/collection routes ###########################
 
+  # DEPRECATED
   get "collection*tags",       to: 'collection#index'
+  
   get "listing/:artist/:slug", to: 'listing#index'
-
+  get "listing/:slug",         to: 'listing#index'
 
   # home about and static page routes ############################
 

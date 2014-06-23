@@ -14,10 +14,14 @@ module ApplicationHelper
 
     # if listing contains an id, then we build a uri for a individual 
     # listing
-    unless listing[:id].nil?
+    if listing[:id]
       uri  = "/listing"
       uri += "/#{listing[:artist_slug]}" if listing[:artist_slug]
       uri += "/#{listing[:slug]}"
+
+    elsif request.path =~ /exhibit/
+      "/exhibit/#{listing[:slug]}"
+
     else
       request.path + '/' + listing[:slug]      
     end

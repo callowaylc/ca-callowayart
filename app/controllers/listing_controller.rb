@@ -1,19 +1,26 @@
 class ListingController < ApplicationController
   def index
   
-    params[:artist] = nil if params[:artist] == 'na'
-    
+    search = { title_slug:  params[:slug]   }    
+    search = { artist_slug: params[:artist_slug] } if params[:artist_slug]
+
     # get listing
-    @listing = Statement.listing({
-      artist_slug: params[:artist], 
-      title_slug:  params[:slug]
-    })[0]
+    @listing = Statement.listing( search )[0]
 
+    # get associated art by artist, if artist slug is available
+    if ( slug = params[:artist_slug]   ) || 
+       ( slug = @listing[:artist_slug] )
 
-    # get associated art from the artist
-    @listings  = Statement.collection tags: [ params[:artist] ]
-    @slug      = params[:slug]
-    @artist    = params[:artist]
+      @listings  = Statement.collection tags: [ slug ]
+      @slug      = params[:slug]
+      @artist    = params[:artist]
+
+    # otherwise we try to match by other tags other than
+    # slug
+    else
+      @listings = Statement.collection tags: @listing[:tags]
+
+    end
   
   end
 end
