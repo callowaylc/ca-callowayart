@@ -33,9 +33,9 @@ CaCallowayart::Application.routes.draw do
   get  "about",   to: 'home#about'
   get  "contact", to: 'home#contact'
   get  "design",  to: 'home#design'
-
   post "join",    to: 'home#join'
-
+  post "about",   to: 'home#about'
+  post "contact", to: 'home#contact'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

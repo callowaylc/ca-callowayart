@@ -119,3 +119,16 @@ div.side-facets {
 
 }
 
+div.contact-form {
+	width:325px;
+}
+
+div.contact-form-input-top {
+	float:left;
+	margin-right:15px;
+	margin-bottom: 10px;
+}
+
+textarea.contact-form-input-textarea {
+	width:100%;
+}
