@@ -38,12 +38,12 @@ class HomeController < ApplicationController
   end
 
   def about
-    deliver_submission if params[:email].presnt?
+    deliver_submission if params[:email].present?
   end
 
   private
     def deliver_submission
-
+      ContactMailer.simple_inquiry( params ).deliver
     end
 
 end
