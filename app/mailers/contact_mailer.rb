@@ -1,6 +1,6 @@
 class ContactMailer < ActionMailer::Base
   default from: 'notifications@callowayart.com'
-  default to:   'susan@callowayart.com'
+  default to:   'gallery@callowayart.com'
 
   def simple_inquiry(hash = { })
 
@@ -10,6 +10,7 @@ class ContactMailer < ActionMailer::Base
     @inquiry = hash[:inquiry]
 
     #TODO: replace values with constants
-    mail subject: 'inquiry from callowayart.com'
+    mail subject: 'inquiry from callowayart.com',
+         tag:     'inquiry'
   end
 end
