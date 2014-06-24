@@ -33,4 +33,17 @@ class HomeController < ApplicationController
   def design
   end
 
+  def contact
+    deliver_submission if params[:email].present?
+  end
+
+  def about
+    deliver_submission if params[:email].present?
+  end
+
+  private
+    def deliver_submission
+      ContactMailer.simple_inquiry( params ).deliver
+    end
+
 end
