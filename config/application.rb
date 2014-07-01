@@ -22,5 +22,11 @@ module CaCallowayart
     # config.i18n.default_locale = :de
 
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.action_mailer.delivery_method   = :postmark
+    config.action_mailer.postmark_settings = { 
+      :api_key => ENV['API_KEY_POSTMARK'] 
+    }
+    config.action_mailer.raise_delivery_errors = true    
   end
 end
