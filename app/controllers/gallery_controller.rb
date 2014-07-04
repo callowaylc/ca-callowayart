@@ -24,9 +24,9 @@ class GalleryController < ApplicationController
       # remove any item from list that is an exhibit
       # TODO: this behavior belongs in query, but elasticsearch 
       # does not provide us with aggregates filter as of yet
-      #@listings = @listings.delete_if do | listing |
-      #  listing[:slug].eql?( listing[:exhibit_slug] )
-      #end
+      @listings = @listings.delete_if do | listing |
+        listing[:slug].eql?( listing[:exhibit_slug] )
+      end
     end
 
     # determine if "artist collection" and if the case

@@ -10,7 +10,6 @@
       "must": { "term": {  "__tags" : "<%= tag %>"  }},
     <% end unless tags.nil? %>
 
-    "must_not": { "term": { "__tags" : "exhibit" }},
     "must_not": { "term": { "__tags" : "backendonly" }}
   }},
   
@@ -69,7 +68,13 @@
           "terms": { 
             "field":"constrainedw"   
           }
-        }            
+        },
+
+        "exhibit_slug": {
+          "terms": { 
+            "field":"exhibit_slug"   
+          }
+        }
 
       }
     }
