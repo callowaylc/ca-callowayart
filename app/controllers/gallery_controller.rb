@@ -18,9 +18,19 @@ class GalleryController < ApplicationController
       end
 
       @listings = Statement.collection( tags: tags )
+
+    # otherwise we are showing aggregates 
+    else
+      # remove any item from list that is an exhibit
+      # TODO: this behavior belongs in query, but elasticsearch 
+      # does not provide us with aggregates filter as of yet
+      @listings = @listings.delete_if do | listing |
+        listing[:slug].eql?( listing[:exhibit_slug] )
+      end
     end
 
-    # retrieve artist and description if there are less than
+    # determine if "artist collection" and if the case
+    # retrieve name and description, if available
     if artist_collection?( @listings )
       @artist      = @listings[0][:artist]
       @description = @listings[0][:artist_description] 
