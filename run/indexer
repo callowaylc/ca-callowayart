@@ -16,6 +16,7 @@ require 'elasticsearch'
 require 'statement'
 require 'rest-client'
 require 'addressable/uri'
+require 'erb'
 
 # CONSTANTS
 
@@ -133,10 +134,34 @@ def get(resource, params = { })
 
 end
 
+def post(resource, body)
+
+  # convert params to get query string
+  uri = Addressable::URI.new
+  uri.query_values = params
+
+  # fire get request, parse json response and return
+  JSON.parse(RestClient.post(
+    "http://cms.callowayart.com/api#{resource}",
+    
+    # json body
+    body
+  ))
+
+
+end
+
 def elasticsearch
 	@elasticsearch ||= begin
 		Elasticsearch::Client.new
 	end
+end
+
+def create_document(id, body)
+	elasticsearch.perform_request 'POST', 
+                                '/callowayart/slug',
+                                { },
+                                body
 end
 
 # MAIN
@@ -147,8 +172,12 @@ end
 
 # call callowayart cms for tags and index against es
 get( '/tag' ).each do | record |
-	puts rec
+	Statement.query :create_tag, tag: record do | statement |
+		create_document record[:slug], statement 
+	end	
 end
+
+exit
 
 
 # iterate through records
