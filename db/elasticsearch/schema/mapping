@@ -1,3 +1,28 @@
+curl -XPUT 'http://localhost:9200/callowayart/tag/_mapping' -d '
+{
+    "tag" : {
+       "properties":{
+            "attributes":{
+              "analyzer": "keyword",
+               "type":    "string"
+            },
+            "slug":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },
+            "name":{
+               "index": "not_analyzed",
+               "type":  "string"
+            },
+            "description":{
+               "index": "not_analyzed",
+               "type":  "string"
+            }
+        }
+    }
+}
+' 
+
 curl -XPUT 'http://localhost:9200/callowayart/art/_mapping' -d '
 {
     "art" : {

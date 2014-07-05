@@ -158,8 +158,8 @@ def elasticsearch
 end
 
 def create_document(id, body)
-	elasticsearch.perform_request 'POST', 
-                                '/callowayart/slug',
+	elasticsearch.perform_request "POST", 
+                                "/callowayart/tag/#{id}",
                                 { },
                                 body
 end
@@ -172,12 +172,17 @@ end
 
 # call callowayart cms for tags and index against es
 get( '/tag' ).each do | record |
+		
+	# parse description for attributes
+	unless ( attributes = record['description'].scan( /\@(\w+)/ ) ).empty?
+		record['attributes'] = attributes.flatten
+	end
+
 	Statement.query :create_tag, tag: record do | statement |
-		create_document record[:slug], statement 
+		create_document record['slug'], statement 
 	end	
 end
 
-exit
 
 
 # iterate through records
