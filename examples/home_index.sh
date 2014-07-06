@@ -1,4 +1,6 @@
-#!GET /callowayart/art/_search
+#!/bin/bash
+# search_home.sh: a example proof of query against home#index 
+curl -XGET http://${SERVER}:${ES_PORT}/callowayart/art/_search?pretty -d '
 {
   "size" : 10,
 
@@ -15,3 +17,4 @@
     }
   }
 }
+'

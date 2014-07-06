@@ -22,18 +22,20 @@ CaCallowayart::Application.routes.draw do
 
   # artist portfolio/collection routes ###########################
 
+  # DEPRECATED
   get "collection*tags",       to: 'collection#index'
+  
   get "listing/:artist/:slug", to: 'listing#index'
-
+  get "listing/:slug",         to: 'listing#index'
 
   # home about and static page routes ############################
 
   get  "about",   to: 'home#about'
   get  "contact", to: 'home#contact'
   get  "design",  to: 'home#design'
-
   post "join",    to: 'home#join'
-
+  post "about",   to: 'home#about'
+  post "contact", to: 'home#contact'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

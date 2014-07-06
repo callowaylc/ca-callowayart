@@ -21,9 +21,11 @@
 				<td width="205"><%= image_tag "15x600_lefttbar.jpg" %><%= image_tag "about_pics2.jpg" %><%= image_tag "40x600_rightbar.jpg" %>
         </td>
 				<td width="395" valign="top">
-          <%= image_tag "395x270_white.jpg" %>
+          <div style="width:365px; overflow:hidden; margin:15px">
+<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6209.084576966889!2d-77.06519399999999!3d38.91158099999996!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b7b637ad13f8e3%3A0xc4bf93455628ea50!2s1643+Wisconsin+Ave+NW!5e0!3m2!1sen!2sus!4v1401950962143" width="400" height="300" frameborder="0" style="border:0"></iframe></div>
+
           <table width="100%" cellpadding="15" cellspacing="15" border="0">
-            <tr><td>
+            <tr><td valign="top">
             <b>Contact The Gallery</b><p>
             1643 Wisconsin Ave<br />
             Washington DC 20007<br />
@@ -32,11 +34,11 @@
             <a href=mailto:gallery@callowayart.com>gallery@callowayart.com</a><br />
             <br />
             <br />
-            10 am to 6 pm Tuesday through Saturday<br />
-            <br />
-            <br />
-            <br />
-            <a href=http://maps.google.com/maps?f=q&hl=en&geocode=&q=1643+Wisconsin+Ave,+20007&sll=37.0625,-95.677068&sspn=76.482111,114.609375&ie=UTF8&z=16&iwloc=addr target=_blank>Click here for a map to our gallery</a><br />
+            10 am to 6 pm Tuesday through Saturday
+            </td></tr>
+
+            <tr><td>
+              <%= render "shared/contact_form" %>
             </td></tr>
           </table>				
         </td>
