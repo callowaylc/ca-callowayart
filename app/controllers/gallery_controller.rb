@@ -21,12 +21,15 @@ class GalleryController < ApplicationController
 
     # otherwise we are showing aggregates 
     else
-      # remove any item from list that is an exhibit
-      # TODO: this behavior belongs in query, but elasticsearch 
-      # does not provide us with aggregates filter as of yet
-      @listings = @listings.delete_if do | listing |
-        listing[:slug].eql?( listing[:exhibit_slug] )
-      end
+
+      # aggregates are simply tags - get a list of 
+      # all hidden tags and remove from list
+      hidden = Statement.hidden_tags( tags: @listings.map { | listing | 
+        listing[:slug]
+      })
+
+      raise hidden.to_s
+
     end
 
     # determine if "artist collection" and if the case

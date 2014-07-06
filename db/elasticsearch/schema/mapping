@@ -3,7 +3,7 @@ curl -XPUT 'http://localhost:9200/callowayart/tag/_mapping' -d '
     "tag" : {
        "properties":{
             "attributes":{
-              "analyzer": "keyword",
+              "analyzer": "not_analyzed",
                "type":    "string"
             },
             "slug":{
