@@ -25,8 +25,11 @@ class Statement
       else
         # now massage result set into a simpler data structure
         data   = [ ]
-        result = client.search index: 'callowayart', 
-                                  body:  statement
+        result = client.search(
+          index: 'callowayart', 
+          type:  'art',
+          body:  statement
+        )
 
         # if aggregations have been returned, we are returning
         # a grouped result set

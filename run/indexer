@@ -166,11 +166,9 @@ end
 
 # MAIN
 
-
-
-# create rest client
-
 # call callowayart cms for tags and index against es
+puts "processing tags ..."
+
 get( '/tag' ).each do | record |
 		
 	# parse description for attributes
@@ -182,7 +180,7 @@ get( '/tag' ).each do | record |
 		create_document record['slug'], statement 
 	end	
 end
-
+exit
 
 
 # iterate through records
@@ -193,11 +191,11 @@ loop do
 	puts "processing images #{count * limit} through #{(count * limit) + limit}"
 
 	index  = [ ] 
-	images = JSON.parse(rest.get('/api/image', {
+	images = get( '/image', {
 		offset: ((count += 1) - 1) * limit,
 		limit:  limit,
 		recent: ARGV[0] == 'recent' && 1 || 0
-	}).body)
+	})
 
 	# iterate through images, transform and import into 
 	# elastic search
