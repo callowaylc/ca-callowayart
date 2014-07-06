@@ -92,7 +92,7 @@
                 </td>
 
                 <td width='190' class='description'>
-                  <a href="<%= uri_for listing %>" >
+                  <a href="<%= uri_for listing %>" name="<%= listing[:slug] %>" >
                     <b><%= deslugify( listing[:title] ) %></b><br />
                     <%= raw(description_for( listing )) %>
                   </a>
