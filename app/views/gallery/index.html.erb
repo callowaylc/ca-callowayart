@@ -12,8 +12,9 @@
 
 <%# if not a single artist, we check for facets, and if the
     case, we add a list of them to help narrow down search
-%> 
-<% elsif @facets && @facets.length > 0 %>
+%>
+<% end %> 
+<% if @facets && @facets.length > 0 %>
   <br /><br />
   <div class="side-facets">
     <div class="side-facets-intro" >

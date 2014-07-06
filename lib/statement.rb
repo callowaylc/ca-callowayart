@@ -15,46 +15,68 @@ class Statement
 
       # parse and return valid statement and pass to 
       # elasticsearch client
-      statement = erb.result OpenStruct.new(params).instance_eval { 
+      statement = erb.result(OpenStruct.new(params).instance_eval { 
         binding 
-      }
-      result    = client.search index: 'callowayart', 
-                                body:  statement
+      })
 
-      # now massage result set into a simpler data structure
-      data = [ ]
+      # check if path has already been provided as a part of 
+      # the statement; if not, we go back to defaults
+      if statement =~ /^\#\!.+/
+        matches    = statement.match( /^\#\!(\w+)\s+?(.+)/ )
+        verb, path = matches[1], matches[2]
 
-      # if aggregations have been returned, we are returning
-      # a grouped result set
-      if result['aggregations'].nil?
-        result['hits']['hits'].each do | hash |
-          # assign 
-          record = hash['_source']
-          record.merge!({
-            slug:  record['title_slug'],
-            image: record['constrainedw'],
-            available: !record['tags'].include?( 'not-available' )
-          })
+        # remove verb/path designator from string
+        statement.sub!( /^\#\!.+/, '')
+      end
 
-          data << record.with_indifferent_access
-        end
+      if block_given?
+        yield( statement )
 
-      else                
-        result['aggregations'].first.pop['buckets'].each do | bucket |
+      else
+        # now massage result set into a simpler data structure
+        data   = [ ]
+        result = client.perform_request(
+          verb   || 'GET',
+          path   || '/callowayart/art/_search',
+          { },
+          statement
+        ).body
 
-          aggregate_value = lambda do | key |
+        # if aggregations have been returned, we are returning
+        # a grouped result set
+        if result['aggregations'].nil?
+          result['hits']['hits'].each do | hash |
+            # assign 
+            record = hash['_source']
+
             begin
-              bucket[key]['buckets'].sample['key']
-            rescue
-              nil
+              record.merge!({
+                slug:  record['title_slug'],
+                image: record['constrainedw'],
+                available: !record['tags'].include?( 'not-available' )
+              })
+            rescue Exception => ignore
             end
+
+            data << record.with_indifferent_access
           end
 
-          # we don't want collections larger than 150, we check
-          # doc_count and exclude when over max count 
-          # TODO: this should be moved to elasticsearch statement 
-          # but there is currently not a max_doc_count field
-          if bucket['doc_count'] < 150
+        else                
+          result['aggregations'].first.pop['buckets'].each do | bucket |
+
+            aggregate_value = lambda do | key |
+              begin
+                bucket[key]['buckets'].sample['key']
+              rescue
+                nil
+              end
+            end
+
+            # we don't want collections larger than 150, we check
+            # doc_count and exclude when over max count 
+            # TODO: this should be moved to elasticsearch statement 
+            # but there is currently not a max_doc_count field
+
             record = { 
               title: bucket['key'],
               slug:  bucket['key'],
@@ -92,9 +114,9 @@ class Statement
             data << record.with_indifferent_access
           end
         end
-      end
 
-      data
+        data
+      end
     end
 
     def method_missing(name, *arguments)
@@ -106,8 +128,15 @@ class Statement
         raise aggregate.to_s  
       end
 
+      # PASS
+      def search
 
+      end
 
+      # PASS
+      def create
+
+      end
 
   end
 

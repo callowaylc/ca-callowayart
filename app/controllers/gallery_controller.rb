@@ -6,6 +6,12 @@ class GalleryController < ApplicationController
     # retrieve upcoming exhibits
     @listings = sort Statement.groups_gallery( tags: tags )
 
+    # retrieve set of hidden tags beased on on tags domain
+    # of tags given from listings
+    hidden = Statement.hidden_tags( tags: @listings.map { | listing | 
+      listing[:slug]
+    })    
+
     # if listings falls between 0 and MAX number
     if @listings.count.between?( 0, 5 )
       @facets = @listings.map do | listing |
@@ -17,16 +23,30 @@ class GalleryController < ApplicationController
         }
       end
 
+      # now that we have hidden, remove any matching slugs
+      # from listings
+      @facets = @facets.delete_if do | listing |
+        hidden.any? { | record | record[:slug] == listing[:slug] }
+      end
+
+
       @listings = Statement.collection( tags: tags )
 
     # otherwise we are showing aggregates 
     else
-      # remove any item from list that is an exhibit
-      # TODO: this behavior belongs in query, but elasticsearch 
-      # does not provide us with aggregates filter as of yet
+
+      # now that we have hidden, remove any matching slugs
+      # from listings
+      @listings = @listings.delete_if do | listing |
+        hidden.any? { | record | record[:slug] == listing[:slug] }
+      end
+
       @listings = @listings.delete_if do | listing |
         listing[:slug].eql?( listing[:exhibit_slug] )
-      end
+      end      
+
+
+
     end
 
     # determine if "artist collection" and if the case

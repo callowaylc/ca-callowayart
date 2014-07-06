@@ -2,6 +2,8 @@
 # Description: Migrates data from defunt callowayart database
 
 # REQUIRE
+$LOAD_PATH.unshift(ENV['RAILS_ROOT'] + '/lib')
+
 require 'faraday'
 require 'tire'
 require 'json'
@@ -10,6 +12,11 @@ require 'pp'
 require 'aws/s3'
 require 'uri'
 require 'pathname'
+require 'elasticsearch'
+require 'statement'
+require 'rest-client'
+require 'addressable/uri'
+require 'erb'
 
 # CONSTANTS
 
@@ -110,12 +117,69 @@ def save_to_s3 uri, path
 	domain + save_path
 end
 
+
+def get(resource, params = { })
+
+  # convert params to get query string
+  uri = Addressable::URI.new
+  uri.query_values = params
+
+  # fire get request, parse json response and return
+  JSON.parse(RestClient.get(
+    "http://cms.callowayart.com/api#{resource}?#{uri.query}",
+    
+    #headers
+    {  }
+  ))
+
+end
+
+def post(resource, body)
+
+  # convert params to get query string
+  uri = Addressable::URI.new
+  uri.query_values = params
+
+  # fire get request, parse json response and return
+  JSON.parse(RestClient.post(
+    "http://cms.callowayart.com/api#{resource}",
+    
+    # json body
+    body
+  ))
+
+
+end
+
+def elasticsearch
+	@elasticsearch ||= begin
+		Elasticsearch::Client.new
+	end
+end
+
+def create_document(id, body)
+	elasticsearch.perform_request "POST", 
+                                "/callowayart/tag/#{id}",
+                                { },
+                                body
+end
+
 # MAIN
 
+# call callowayart cms for tags and index against es
+puts "processing tags ..."
 
+get( '/tag' ).each do | record |
+		
+	# parse description for attributes
+	unless ( attributes = record['description'].scan( /\@(\w+)/ ) ).empty?
+		record['attributes'] = attributes.flatten
+	end
 
-# create rest client
-rest = Faraday.new 'http://cms.callowayart.com'
+	Statement.query :create_tag, tag: record do | statement |
+		create_document record['slug'], statement 
+	end	
+end
 
 # iterate through records
 count = 0
@@ -125,11 +189,11 @@ loop do
 	puts "processing images #{count * limit} through #{(count * limit) + limit}"
 
 	index  = [ ] 
-	images = JSON.parse(rest.get('/api/image', {
+	images = get( '/image', {
 		offset: ((count += 1) - 1) * limit,
 		limit:  limit,
 		recent: ARGV[0] == 'recent' && 1 || 0
-	}).body)
+	})
 
 	# iterate through images, transform and import into 
 	# elastic search
