@@ -1,3 +1,4 @@
+#!GET /callowayart/art/_search
 {
   "size" : 10,
 
@@ -5,5 +6,12 @@
     "must_not": { "term": { "__tags" : "backendonly" }}
   }},
 
-  "sort" : { }
+  "sort" : {
+    "_script" : { 
+        "script" : "Math.random()",
+        "type" : "number",
+        "params" : {},
+        "order" : "asc"
+    }
+  }
 }

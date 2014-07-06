@@ -180,8 +180,6 @@ get( '/tag' ).each do | record |
 		create_document record['slug'], statement 
 	end	
 end
-exit
-
 
 # iterate through records
 count = 0

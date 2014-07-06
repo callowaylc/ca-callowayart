@@ -1,0 +1,16 @@
+# GET /callowayart/tag
+{
+// Returns term aggregation on document.tags for documents not matching
+// strings defined in "tags" argument
+
+
+  "size" : 0,
+
+  "query": { "bool": {
+    <% tags.each_with_index do | tag, index | %>
+      "must": { "term": {  "slug" : "<%= tag %>"  }},
+    <% end unless tags.nil? %>
+
+    "must": { "term": { "attributes" : "hidden" }}
+  }}
+}

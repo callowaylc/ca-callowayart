@@ -19,17 +19,28 @@ class Statement
         binding 
       })
 
+      # check if path has already been provided as a part of 
+      # the statement; if not, we go back to defaults
+      if statement =~ /^\#\!.+/
+        matches    = statement.match( /^\#\!(\w+)\s+?(.+)/ )
+        verb, path = matches[1], matches[2]
+
+        # remove verb/path designator from string
+        statement.sub!( /^\#\!.+/, '')
+      end
+
       if block_given?
         yield( statement )
 
       else
         # now massage result set into a simpler data structure
         data   = [ ]
-        result = client.search(
-          index: 'callowayart', 
-          type:  'art',
-          body:  statement
-        )
+        result = client.perform_request(
+          verb   || 'GET',
+          path   || '/callowayart/art/_search',
+          { },
+          statement
+        ).body
 
         # if aggregations have been returned, we are returning
         # a grouped result set
@@ -114,8 +125,15 @@ class Statement
         raise aggregate.to_s  
       end
 
+      # PASS
+      def search
 
+      end
 
+      # PASS
+      def create
+
+      end
 
   end
 
