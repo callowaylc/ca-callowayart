@@ -48,11 +48,15 @@ class Statement
           result['hits']['hits'].each do | hash |
             # assign 
             record = hash['_source']
-            record.merge!({
-              slug:  record['title_slug'],
-              image: record['constrainedw'],
-              available: !record['tags'].include?( 'not-available' )
-            })
+
+            begin
+              record.merge!({
+                slug:  record['title_slug'],
+                image: record['constrainedw'],
+                available: !record['tags'].include?( 'not-available' )
+              })
+            rescue Exception => ignore
+            end
 
             data << record.with_indifferent_access
           end
@@ -72,43 +76,42 @@ class Statement
             # doc_count and exclude when over max count 
             # TODO: this should be moved to elasticsearch statement 
             # but there is currently not a max_doc_count field
-            if bucket['doc_count'] < 150
-              record = { 
-                title: bucket['key'],
-                slug:  bucket['key'],
-                count: bucket['doc_count'],
-                available: true
-              }
 
-              # iterate through bucket fields - the result set will
-              # be the arbiter of what fields are available
-              bucket.keys.each do | key |
-                if ( value = bucket[key] ).kind_of?( Hash )
-                  # remove all empty value fields 
-                  buckets = value['buckets'].reject do | bucket | 
-                    bucket['key'].nil? || 
-                    bucket['key'].kind_of?( String) && bucket['key'].empty?
-                  end
+            record = { 
+              title: bucket['key'],
+              slug:  bucket['key'],
+              count: bucket['doc_count'],
+              available: true
+            }
 
-                  # now assign sample from buckets with non-null values
-                  record[key.to_sym] = buckets.sample['key'] unless buckets.empty?
-
-                  # also get reference to collection
-                  if buckets.count > 1
-                    record["#{key}_collection"] = buckets.map { | bucket | bucket['key'] }
-                  end
-
-      
-                else
-                  record[key.to_sym] = value
+            # iterate through bucket fields - the result set will
+            # be the arbiter of what fields are available
+            bucket.keys.each do | key |
+              if ( value = bucket[key] ).kind_of?( Hash )
+                # remove all empty value fields 
+                buckets = value['buckets'].reject do | bucket | 
+                  bucket['key'].nil? || 
+                  bucket['key'].kind_of?( String) && bucket['key'].empty?
                 end
 
+                # now assign sample from buckets with non-null values
+                record[key.to_sym] = buckets.sample['key'] unless buckets.empty?
 
-              end         
+                # also get reference to collection
+                if buckets.count > 1
+                  record["#{key}_collection"] = buckets.map { | bucket | bucket['key'] }
+                end
 
-              # add record to queue
-              data << record.with_indifferent_access
-            end
+    
+              else
+                record[key.to_sym] = value
+              end
+
+
+            end         
+
+            # add record to queue
+            data << record.with_indifferent_access
           end
         end
 

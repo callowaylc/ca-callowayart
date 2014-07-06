@@ -28,7 +28,17 @@ class GalleryController < ApplicationController
         listing[:slug]
       })
 
-      raise hidden.to_s
+      # now that we have hidden, remove any matching slugs
+      # from listings
+      @listings = @listings.delete_if do | listing |
+        hidden.any? { | record | record[:slug] == listing[:slug] }
+      end
+
+      @listings = @listings.delete_if do | listing |
+        listing[:slug].eql?( listing[:exhibit_slug] )
+      end      
+
+
 
     end
 
