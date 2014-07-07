@@ -2,7 +2,8 @@
 <div class="contact-form" >
 
   <div style="clear:both" ></div>
-  <form method="post" >
+  <form method="post" action="/contact" >
+    <input type="hidden" value="<%= request.path %>" name="referer" />
     <div class="contact-form-input contact-form-input-top" >
       <input type="text" name="name" placeholder="Name" />
     </div>
