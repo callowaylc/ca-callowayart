@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require gallery
+//= require listing
 
 $(document).ready(function() {
 
