@@ -1,4 +1,5 @@
 
 $(document).ready(function() {
-	console.log(document.referrer) 
+  alert("listing?")
+	alert(localStorage.getItem('gallery-referer'))
 })
