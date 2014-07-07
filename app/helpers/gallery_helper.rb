@@ -15,4 +15,18 @@ module GalleryHelper
                                      
   end
 
+  # given the current "context", which is define is tags currently
+  # displayed, create a data structure to represent breadcrumbs
+  # when navigating through arbitrary tag sets
+  def breadcrumbs
+    returns = { } 
+    count   = -1
+
+    tags.each do | tag |
+      returns[tag] = '/gallery/' + tags[0..( count += 1 )].join( '/' )
+    end
+
+    returns
+  end    
+
 end

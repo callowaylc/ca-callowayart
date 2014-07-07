@@ -131,4 +131,25 @@ div.contact-form-input-top {
 
 textarea.contact-form-input-textarea {
 	width:100%;
+  height:150px;
+}
+
+.contact-form-header {
+	font-family: garamond;
+	font-size: 12pt
+}
+
+.contact-form {
+  margin-right:20px;
+  margin-top:50px;
+}
+
+#breadcrumbs {
+  margin:10px;
+}
+
+.breadcrumb {
+  font-family: garamond;
+  font-variant: small-caps;
+  font-size: 10pt;  
 }

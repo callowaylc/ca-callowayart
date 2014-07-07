@@ -34,11 +34,17 @@ class HomeController < ApplicationController
   end
 
   def contact
-    deliver_submission if params[:email].present?
+    # deliver submission and redirect if email and referer
+    # are present; the two actions are independant of one 
+    # another 
+    # TODO: this is a hack until we encapsulate mail send to
+    # its own controller
+    deliver_submission           if params[:email].present?
+    redirect_to params[:referer] if params[:referer].present?
+
   end
 
   def about
-    deliver_submission if params[:email].present?
   end
 
   private
