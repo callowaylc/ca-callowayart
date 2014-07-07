@@ -13,7 +13,7 @@ class GalleryController < ApplicationController
     })    
 
     # if listings falls between 0 and MAX number
-    if @listings.count.between?( 0, 5 )
+    if @listings.count.between?( 0, 6 )
       @facets = @listings.map do | listing |
         {
           slug:  listing[:slug],
@@ -62,6 +62,7 @@ class GalleryController < ApplicationController
   def design
   end
 
+
   private 
 
     def sort(listings)
@@ -76,5 +77,7 @@ class GalleryController < ApplicationController
         uniques.length == 1
       end
     end
+
+
 
 end
