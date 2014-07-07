@@ -13,7 +13,7 @@ $(document).ready(func = function() {
 
     // check if referer is from gallery, if the case, we will
     // build breadcrumbs from path
-    if (referer.match( /^\/gallery/ )) {
+    if (referer && referer.match( /^\/gallery/ )) {
 
       // remove gallery from path and seperate out
       // path nodes
