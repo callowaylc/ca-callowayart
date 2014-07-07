@@ -143,3 +143,13 @@ textarea.contact-form-input-textarea {
   margin-right:20px;
   margin-top:50px;
 }
+
+#breadcrumbs {
+  margin:10px;
+}
+
+.breadcrumb {
+  font-family: garamond;
+  font-variant: small-caps;
+  font-size: 10pt;  
+}

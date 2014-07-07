@@ -20,12 +20,13 @@ module GalleryHelper
   # when navigating through arbitrary tag sets
   def breadcrumbs
     returns = { } 
-    count   = 0
+    count   = -1
 
     tags.each do | tag |
       returns[tag] = '/gallery/' + tags[0..( count += 1 )].join( '/' )
     end
 
+    returns
   end    
 
 end
