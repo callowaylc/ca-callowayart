@@ -25,7 +25,7 @@
 			<tr >
 			<td height="50px">
 				<div class="return-category" >
-						<a href="/gallery/<%= @listing[:artist_slug] %>" ><%= @listing[:artist] %></a> :: <%= @listing[:title].downcase %>
+						<a href="/gallery/<%= @listing[:artist_slug] %>" style="color:blue" ><%= @listing[:artist] %></a> :: <%= @listing[:title].downcase %>
 
 						<% unless @listing[:available] %>
 							<span style="color:red" >
