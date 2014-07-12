@@ -1,4 +1,5 @@
 CaCallowayart::Application.routes.draw do
+  get "submission/index"
   get "auth/constantcontact"
 
   get "gallery*tags", to: 'gallery#index', defaults: {
@@ -8,7 +9,12 @@ CaCallowayart::Application.routes.draw do
     group: 'artists'
   }
 
-  # exhibit related routes #######################################
+  # artist submission
+  #######################################
+  get 'submission', to: 'submission#index'
+
+  # exhibit related routes
+  #######################################
 
   get "exhibit/past",       to: 'exhibit#past'
   get "exhibit/current",    to: 'exhibit#current'
@@ -16,19 +22,19 @@ CaCallowayart::Application.routes.draw do
   get "exhibit/(:exhibit)", to: 'exhibit#show'
 
 
-  # search and facet related routes ##############################
+  # search and facet related routes
+  #######################################
 
   get "/search", to: 'search#index'
 
-  # artist portfolio/collection routes ###########################
-
-  # DEPRECATED
-  get "collection*tags",       to: 'collection#index'
+  # artist portfolio/collection routes 
+  #######################################
   
   get "listing/:artist/:slug", to: 'listing#index'
   get "listing/:slug",         to: 'listing#index'
 
-  # home about and static page routes ############################
+  # home about and static page routes
+  #######################################
 
   get  "about",   to: 'home#about'
   get  "contact", to: 'home#contact'

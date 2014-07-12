@@ -1,0 +1,84 @@
+{
+  "took" : 3,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 5,
+    "successful" : 5,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : 901,
+    "max_score" : null,
+    "hits" : [ {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "1395",
+      "_score" : null,
+      "_source":{"id":1395,"title":"untitled (still #17)","title_slug":"untitled-still-17","description":"untitled (still #17)\r\nDavid Ivan Clark\r\noil on wood panel\r\nArt Size: 12 x 24\r\nPrice: $1,700.00 (C3392DC)\r\n\r\n ","artist":"david ivan clark","uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/1539.jpg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/1539-thumb.jpg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/1539-thumbh.jpg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/1539-constrainedw.jpg","tags":["contemporary-art","david-ivan-clark","david-ivan-clark-presenceabsence","exhibit"],"type":"art","artist_description":"Originally from the plains of Western Canada, David graduated from Princeton University in 1983 and studied architecture at the Oregon School of Design from 1987 to 1989. With the exception of a brief apprenticeship with Jonathan Barbieri, Oaxaca, Mexico, he is self-taught as a painter and draftsman. In addition to solo and group exhibitions around the Bay Area, his work has been chosen by curators from the Whitney Museum of American Art, the Los Angeles County Museum, and the Denver Art Museum for inclusion in shows at various venues in the western states. It is held in over one hundred private, public and corporate collections throughout the United States and Canada. \r\n\r\nhttp://www.davidivanclark.com/","artist_slug":"david-ivan-clark","exhibit":"david ivan clark presence/absence","exhibit_slug":"david-ivan-clark-presenceabsence","exhibit_description":"","artist_last_name":"clark"},
+      "sort" : [ 9.120336903445381E-4 ]
+    }, {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "2300",
+      "_score" : null,
+      "_source":{"id":2300,"title":"Phytographia Curiosa, Fig. 30","title_slug":"phytographia-curiosa-fig-30","description":"Phytographia Curiosa, 1702\r\nAbraham Munting, Dutch\r\nHand-colored copperplate engraving\r\nArt size: 10 x 13.5\r\nPrice: $450.00 (S0196)\r\n","artist":"abraham munting","uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/2542.jpg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/2542-thumb.jpg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/2542-thumbh.jpg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/2542-constrainedw.jpg","tags":["abraham-munting","antique-prints-and-drawings"],"type":"art","artist_description":"","artist_slug":"abraham-munting","artist_last_name":"munting"},
+      "sort" : [ 0.00254756039052062 ]
+    }, {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "3047",
+      "_score" : null,
+      "_source":{"id":3047,"title":"15x11.5 Gray","title_slug":"15x115-gray","description":"","artist":null,"uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/07/15x11.5-Gray.jpg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/07/15x11-thumb.5-Gray.jpg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/07/15x11-thumbh.5-Gray.jpg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/07/15x11-constrainedw.5-Gray.jpg","tags":[],"type":"art","artist_description":null},
+      "sort" : [ 0.00475143061973482 ]
+    }, {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "872",
+      "_score" : null,
+      "_source":{"id":872,"title":"Phytanthoza Iconographia Pl.61","title_slug":"phytanthoza-iconographia-pl61","description":"Johann Wilhelm Weinmann\r\nPhytanthoza Iconographia Pl.61, 1737-45\r\nHand-colored copperplate engraving\r\nArt size: 10 x 15 7/8\r\nPrice: $1350.00 (S0172WB)","artist":"johann wilhelm weinmann","uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/898.jpg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/898-thumb.jpg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/898-thumbh.jpg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/898-constrainedw.jpg","tags":["antique-prints-and-drawings","johann-wilhelm-weinmann"],"type":"art","artist_description":"","artist_slug":"johann-wilhelm-weinmann","artist_last_name":"weinmann"},
+      "sort" : [ 0.008444066088771685 ]
+    }, {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "2833",
+      "_score" : null,
+      "_source":{"id":2833,"title":"Portrait of a Dapper Man ","title_slug":"portrait-of-a-dapper-man","description":"Portrait of a Dapper Man \r\nEdouard Celerier\r\ndated 1912\r\noil on mahogany panel\r\nArt Size: 12.75 x 16.25; Frame Size: 19.75 x 23.25\r\nPrice: $1,950.00 (C2378AN)","artist":"portraits and figures","uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/04/C2378AN.jpg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/04/c2378an-thumb.jpg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/04/c2378an-thumbh.jpg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/04/c2378an-constrainedw.jpg","tags":["antique-paintings","portraits-and-figures"],"type":"art","artist_description":"","artist_slug":"portraits-and-figures","artist_last_name":"figures"},
+      "sort" : [ 0.00927182731326437 ]
+    }, {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "2743",
+      "_score" : null,
+      "_source":{"id":2743,"title":"Cherry Trees","title_slug":"cherry-trees","description":"Cherry Trees\r\nRodgers Naylor\r\n2013 oil on panel\r\nArt Size: 11 x 14, unframed\r\nPrice: SOLD (C4756RN)","artist":"rodgers naylor","uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/04/CherryTrees_14x11.jpg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/04/cherrytrees_14x11-thumb.jpg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/04/cherrytrees_14x11-thumbh.jpg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/04/cherrytrees_14x11-constrainedw.jpg","tags":["contemporary-art","rodgers-naylor"],"type":"art","artist_description":"Rodgers Naylor was born in Washington, D.C. in 1954 and spent his childhood on a farm near the Patuxent River in Maryland. He pursued painting and drawing at the Minneapolis College of Art and Design, The Atelier in Minneapolis, and the Art Students' League of Denver after attending the University of Chicago and Carleton College for academics. Naylor currently lives and works in the mountains of Colorado. \r\n\r\nhttp://grnaylor.com/","artist_slug":"rodgers-naylor","artist_last_name":"naylor"},
+      "sort" : [ 0.009821231106395767 ]
+    }, {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "2479",
+      "_score" : null,
+      "_source":{"id":2479,"title":"untitled (still #87)  ","title_slug":"untitled-still-87-","description":"Untitled (still #87)  \r\nDavid Ivan Clark\r\noil on wood panel\r\nArt Size: 19 x 8.5\r\nPrice: $1200.00 (C4685DIC)\r\n","artist":"david ivan clark","uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/3592.jpg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/3592-thumb.jpg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/3592-thumbh.jpg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/3592-constrainedw.jpg","tags":["david-ivan-clark","exhibit","mirage-david-ivan-clark"],"type":"art","artist_description":"Originally from the plains of Western Canada, David graduated from Princeton University in 1983 and studied architecture at the Oregon School of Design from 1987 to 1989. With the exception of a brief apprenticeship with Jonathan Barbieri, Oaxaca, Mexico, he is self-taught as a painter and draftsman. In addition to solo and group exhibitions around the Bay Area, his work has been chosen by curators from the Whitney Museum of American Art, the Los Angeles County Museum, and the Denver Art Museum for inclusion in shows at various venues in the western states. It is held in over one hundred private, public and corporate collections throughout the United States and Canada. \r\n\r\nhttp://www.davidivanclark.com/","artist_slug":"david-ivan-clark","exhibit":"mirage: david ivan clark","exhibit_slug":"mirage-david-ivan-clark","exhibit_description":"","artist_last_name":"clark"},
+      "sort" : [ 0.025946536730359182 ]
+    }, {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "2628",
+      "_score" : null,
+      "_source":{"id":2628,"title":"The Path of Least Resistance","title_slug":"the-path-of-least-resistance","description":"The Path of Least Resistance\r\nEd Cooper\r\nOil on linen\r\nArt Size: 36 x 24\r\nSold\r\n","artist":"ed cooper","uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/3612.jpg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/3612-thumb.jpg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/3612-thumbh.jpg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/3612-constrainedw.jpg","tags":["contemporary-art","ed-cooper","exhibit","new-landscapes-scenes-from-the-shenandoah-to-the-chesapeake","sold"],"type":"art","artist_description":"Ed Cooper reflects the subtleties of early morning and late afternoon light and color in his plein air landscapes, capturing the interplay of sun and shade on trees, water, and grass. A wanderer, Cooper constantly searches for scenes and objects that evoke an emotional response. He carries as constant companions a pochade box for quick oil sketches and an easel for more elaborate paintings. Cooper holds a BFA from Rochester Institute of Technology and has received awards from the Washington Society of Landscape Painters, American Artist, the National Parks Academy of the Arts, and the Mid-Atlantic Plein Air Painters Association, and the Easton Plein Air Competition and Arts Festival. \r\n\r\nhttp://edcooperstudio.com/","artist_slug":"ed-cooper","exhibit":"new landscapes: scenes from the shenandoah to the chesapeake","exhibit_slug":"new-landscapes-scenes-from-the-shenandoah-to-the-chesapeake","exhibit_description":"","artist_last_name":"cooper","exhibit_start":"20140401"},
+      "sort" : [ 0.033756323887404904 ]
+    }, {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "1529",
+      "_score" : null,
+      "_source":{"id":1529,"title":"Variations on the Silver Theme II","title_slug":"variations-on-the-silver-theme-ii","description":"Variations on the Silver Theme II\r\nJanet Fry Rogers\r\nsilver leaf and mixed media on canvas\r\nArt Size: 40 x 30\r\nPrice: $4,000.00 (C3148JR)\r\n","artist":"janet rogers","uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/1677.jpg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/1677-thumb.jpg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/1677-thumbh.jpg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/02/1677-constrainedw.jpg","tags":["contemporary-art","janet-rogers"],"type":"art","artist_description":"","artist_slug":"janet-rogers","artist_last_name":"rogers"},
+      "sort" : [ 0.03450279199603923 ]
+    }, {
+      "_index" : "callowayart",
+      "_type" : "art",
+      "_id" : "3031",
+      "_score" : null,
+      "_source":{"id":3031,"title":"8x10 30","title_slug":"8x10-30","description":"","artist":null,"uri":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/07/8x10-30.jpeg","thumb":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/07/8x10-30-thumb.jpeg","thumbh":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/07/8x10-30-thumbh.jpeg","constrainedw":"http://callowayart.com.s3.amazonaws.com/wp-content/uploads/2014/07/8x10-30-constrainedw.jpeg","tags":[],"type":"art","artist_description":null},
+      "sort" : [ 0.03536196150551185 ]
+    } ]
+  }
+}
