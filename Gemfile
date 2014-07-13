@@ -35,6 +35,7 @@ gem 'elasticsearch'
 gem 'constantcontact'
 gem 'unicorn-rails'
 gem 'postmark-rails'
+gem "jquery-fileupload-rails"
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
