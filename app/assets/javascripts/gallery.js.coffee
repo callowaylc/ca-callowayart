@@ -2,14 +2,19 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(document).ready func = ->
-  # TODO: below is a hack to deal with gallery and listings
-  # loading together when turbolinks is enabled
+$(document).ready ->
   if location.pathname.match /^\/gallery/
-    # set last pathname, which will be used on listing page
-    localStorage.setItem "gallery-referrer", location.pathname
+    func = ->
+      if location.pathname.match /^\/gallery/
+        # TODO: below is a hack to deal with gallery and listings
+        # loading together when turbolinks is enabled
+        # set last pathname, which will be used on listing page
+        localStorage.setItem "gallery-referrer", location.pathname
+        return
+
+    # call func and attach to page:change event
+    func()
 
     setTimeout ->
-      $(window).bind "page:change", func
-      func = null
+      $(document).bind "page:change", func
       return
