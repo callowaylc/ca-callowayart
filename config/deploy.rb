@@ -103,7 +103,7 @@ namespace :deploy do
       execute "ln -s ~/Develop/ca-callowayart/tmp #{root}/tmp"
 
       begin
-        execute "cat tmp/pids/unicorn.pid`; rails server -d -p 8080"
+        execute "cat tmp/pids/server.pid`; rails server -d -p 8080"
       rescue 
         execute "cd #{root} && nohup rails s &"
       end
