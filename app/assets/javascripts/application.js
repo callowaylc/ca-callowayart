@@ -19,6 +19,11 @@
 
 $(document).ready(function() {
 
+  $('#search').click(function() {
+    if ((val = $('#q').val())) {
+      location.href = '/search/' + encodeURIComponent(val)
+    }
+  })
 })
 
 function getParameterByName(name) {
