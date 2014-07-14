@@ -99,11 +99,11 @@ namespace :deploy do
       # within release_path do
       #   execute :rake, 'cache:clear'
       # end
-      root  = '/var/www/callowayart'
+      root  = '/app/callowyart'
       execute "ln -s ~/Develop/ca-callowayart/tmp #{root}/tmp"
 
       begin
-        execute "kill -s USR2 `cat #{root}/tmp/pids/unicorn.pid`"
+        execute "cat tmp/pids/unicorn.pid`; rails server -d -p 8080"
       rescue 
         execute "cd #{root} && nohup rails s &"
       end
