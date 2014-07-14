@@ -18,7 +18,7 @@ CaCallowayart::Application.routes.draw do
 
   # search and facet related routes ##############################
 
-  get "/search", to: 'search#index'
+  get "/search/:query", to: 'search#index'
 
   # artist portfolio/collection routes ###########################
 
