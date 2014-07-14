@@ -19,9 +19,15 @@
 
 $(document).ready(function() {
 
-  $('#search').click(function() {
+  $('#search').click(search = function() {
     if ((val = $('#q').val())) {
       location.href = '/search/' + encodeURIComponent(val)
+    }
+  })
+
+  $('#q').keypress(function(e) {
+    if(e.which == 13) {
+      search()
     }
   })
 })

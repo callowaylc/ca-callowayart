@@ -1,3 +1,4 @@
+
 class SearchController < ApplicationController
   include ApplicationHelper
 
