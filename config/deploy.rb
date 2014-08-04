@@ -2,39 +2,22 @@
 # app details and WordPress requirements
 
 # tags/3.5.1, branches/3.5, trunk
-set :application, "callowayart.com"
+set :application, 'callowayart.com'
+set :repo_url,    'git@github.com:callowaylc/ca-callowayart.git'
+set :scm,         :git
 
 #=============================================================================
 # app source repository configuration
 
-set :scm, :git
-set :repo_url, "git@github.com:callowaylc/ca-callowayart.git"
-#set :git_enable_submodules, 1
-#set :git_shallow_clone, 1
+set :keep_releases, 3
+set :user,          'ubuntu'
+set :use_sudo,      true
+set :pty,           true
+set :format,        :pretty
+set :log_level,     :info
+set :deploy_via,    :remote_cache
+set :deploy_to,     '/releases'
 
-#=============================================================================
-# Housekeeping
-# clean up old releases on each deploy
-set :keep_releases, 5
-#set :ssh_options, { :forward_agent => true }
-
- # Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
-
-# Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/ubuntu/Develop/ca-callowayart'
-
-# Default value for :scm is :git
-set :scm,    :git
-
-# set server user
-set :user,   "ubuntu"
-
-# deployment will be done via copy
-set :deploy_via, :remote_cache
-
-# only keep the last 5 releases
-set :keep_releases, 5
 
 #=============================================================================
 # Additional Project specific directories

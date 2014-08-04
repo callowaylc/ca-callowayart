@@ -1,4 +1,6 @@
-root = "/var/www/callowayart"
+root = "/app/callowayart"
+
+
 worker_processes 2
 working_directory root
 
