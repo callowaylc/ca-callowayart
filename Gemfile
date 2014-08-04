@@ -38,6 +38,8 @@ gem 'postmark-rails'
 gem "jquery-fileupload-rails"
 gem 'paperclip'
 gem 'twitter-bootstrap-rails'
+gem 'capistrano'
+gem 'capistrano-rails'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
