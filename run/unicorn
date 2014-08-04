@@ -27,7 +27,7 @@ if ( ps = `ps aux | grep rails` ) =~ /rails master/
 end
 
 # restar rails server and daemonize
-`cd #{ ENV['RAILS_ROOT'] } && rails s -d`
+puts `rails s -d`
 
 # accounce finish and exit with success
 puts 'done'

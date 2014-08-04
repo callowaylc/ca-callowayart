@@ -17,7 +17,7 @@ namespace :application do
       # here
       invoke 'unicorn:restart'
       invoke 'nginx:restart'
-      invoke 'unicorn:restart'
+      invoke 'varnish:restart'
     end
   end  
 end
@@ -51,7 +51,14 @@ namespace :unicorn do
   task :restart do
     on roles(:web), in: :sequence, wait: 5 do
       within release_path do
-        execute 'run/unicorn'
+        puts release_path
+        
+        # create tmp/pids and tmp/sockets directories
+        execute :mkdir, '-p ./tmp/pids'
+        execute :mkdir, '-p ./tmp/sockets'
+
+        # now restart 
+        execute './run/unicorn'
       end
     end
   end 
