@@ -1,6 +1,6 @@
 # Simple Role Syntax
 # ==================
-set :branch, 'master'
+set :branch, 'feature/submission'
 set :stage,  'production'
 
 # Supports bulk-adding hosts to roles, the primary

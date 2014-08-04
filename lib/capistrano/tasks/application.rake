@@ -51,7 +51,7 @@ namespace :unicorn do
   task :restart do
     on roles(:web), in: :sequence, wait: 5 do
       within release_path do
-        run './run/unicorn'
+        execute 'run/unicorn'
       end
     end
   end 

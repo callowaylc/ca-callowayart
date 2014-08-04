@@ -1,10 +1,34 @@
-#!/bin/sh
+#!/usr/bin/env ruby
 # author:      christian calloway callowaylc@gmail.com
 # description: runs/restarts rails/unicorn server
 # usage:       ./run/unicorn
 
-pid=`cat $RAILS_ROOT/tmp/pids/unicorn.pid`
-echo "Restarting Unicorn ($unicorn_pid)"
-kill -HUP $unicorn_pid
 
-cd $RAILS_ROOT && rails s -d
+# constants
+##########################################
+
+NEWLINE = "\n"
+SPACE   = ' '
+
+# main
+##########################################
+
+# announce intention of this script
+print  "Restarting Unicorn.."
+
+# get current rails master process id and kill
+# if found
+if ( ps = `ps aux | grep rails` ) =~ /rails master/
+  ps.split( NEWLINE ).each do | line |
+    if line =~ /rails master/
+      `kill -9 #{ line.split( SPACE )[1] }`
+    end
+  end
+end
+
+# restar rails server and daemonize
+`cd #{ ENV['RAILS_ROOT'] } && rails s -d`
+
+# accounce finish and exit with success
+puts 'done'
+exit 0
