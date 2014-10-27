@@ -8,10 +8,7 @@
 			<td width="355">&nbsp;<p /><p /></td>
 			<td width="245" align="right">
 				<div style="margin-top:10px; margin-bottom:10px">
-					<form action="/search" >
-						<input type="text"   name="q"       />
-						<input type="submit" value="search" />
-					</form>
+					<%= render 'shared/search' %>
 				</div>
 			</td>
 		</tr>
@@ -24,8 +21,11 @@
 			<table width="960" height="900" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 			<tr >
 			<td height="50px">
+				<div id="breadcrumbs" >
+					/ <span class="breadcrumb" >gallery</span>
+				</div>
 				<div class="return-category" >
-						<a href="/gallery/<%= @listing[:artist_slug] %>" ><%= @listing[:artist] %></a> :: <%= @listing[:title].downcase %>
+						<a href="/gallery/<%= @listing[:artist_slug] %>" style="color:blue" ><%= @listing[:artist] %></a> :: <%= @listing[:title].downcase %>
 
 						<% unless @listing[:available] %>
 							<span style="color:red" >

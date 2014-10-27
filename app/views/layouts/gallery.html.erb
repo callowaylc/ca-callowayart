@@ -7,10 +7,7 @@
       <td width="355">&nbsp;<p /><p /></td>
       <td width="245" align="right">
         <div style="margin-top:10px; margin-bottom:10px">
-          <form action="/search" >
-            <input type="text"   name="q"       />
-            <input type="submit" value="search" />
-          </form>
+          <%= render 'shared/search' %>
         </div>
       </td>
     </tr>
@@ -18,6 +15,25 @@
   </td></tr>
   <tr align="center">
     <td><table width="960" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+
+      <tr><td colspan="2">
+        <div id='breadcrumbs' >
+          <span class="breadcrumb" >
+            / <%= controller_name %>
+
+            <%# TODO: remove this and relegate to its own template %>
+            <%= "/ #{params[:q]}" if params[:q] %>
+
+          </span>
+          <% breadcrumbs.each do | name, resource | %>
+            <span class='breadcrumb' >
+              / <a href="<%= resource %>" ><%= deslugify name %></a> 
+            </span>
+          <% end %>
+          <div style='clear:both' ></div>
+        </div>
+      </td></tr>
+
       <tr valign="top" align="right">
         <td width="360" >
           <%= image_tag "call_brand.jpg", :usemap => "#Map2" %>
@@ -61,12 +77,17 @@
 
           <%= image_tag "call_nav_2_join.jpg", class: 'navigation-join' %>
         
+
+
           <form action="/join" method="post">
           <p>
             <input type="text" name="email" />
             <input type="image" src="/assets/call_nav_2_submit.jpg"  width="103" height="35" border="0" align="absmiddle" />
           </p>
           </form>
+
+
+            <%= render "shared/contact_form" %>
 
         </td>
         <td width="355">
@@ -92,7 +113,7 @@
                 </td>
 
                 <td width='190' class='description'>
-                  <a href="<%= uri_for listing %>" >
+                  <a href="<%= uri_for listing %>" name="<%= listing[:slug] %>" >
                     <b><%= deslugify( listing[:title] ) %></b><br />
                     <%= raw(description_for( listing )) %>
                   </a>
