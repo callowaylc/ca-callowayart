@@ -12,6 +12,13 @@ class GalleryController < ApplicationController
       listing[:slug]
     })    
 
+
+    # now that we have hidden, remove any matching slugs
+    # from listings
+    @listings = @listings.delete_if do | listing |
+      hidden.any? { | record | record[:slug] == listing[:slug] }
+    end
+
     # if listings falls between 0 and MAX number
     if @listings.count.between?( 0, 6 )
       @facets = @listings.map do | listing |
@@ -37,9 +44,9 @@ class GalleryController < ApplicationController
 
       # now that we have hidden, remove any matching slugs
       # from listings
-      @listings = @listings.delete_if do | listing |
-        hidden.any? { | record | record[:slug] == listing[:slug] }
-      end
+      #@listings = @listings.delete_if do | listing |
+      #  hidden.any? { | record | record[:slug] == listing[:slug] }
+      #end
 
       @listings = @listings.delete_if do | listing |
         listing[:slug].eql?( listing[:exhibit_slug] )

@@ -6,7 +6,10 @@ module GalleryHelper
       # TODO: this is entirely a hack and should be fixed at
       # index time
       description = listing[:description].split( /\n/)
-      if description[0].downcase.strip == listing[:title].downcase.strip
+
+      if description[0] &&
+         description[0].downcase.strip == listing[:title].downcase.strip
+
         description = description[1..-1]
       end
 
